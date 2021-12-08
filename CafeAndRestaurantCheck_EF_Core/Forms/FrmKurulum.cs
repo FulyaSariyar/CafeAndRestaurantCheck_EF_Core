@@ -22,7 +22,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         private KategoriRepo _kategoriRepo = new KategoriRepo();
         public FrmKurulum()
         {
-            InitializeComponent();
+            InitializeComponent();          
         }
         //private void ListeyiDoldur()
         //{
@@ -36,14 +36,13 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         //        }
         //    }
 
-        //    cmbKategori.DataSource = _dbContext.Kategoriler;
+        //    
         //}
         private void btnKaydet_Click(object sender, EventArgs e)
         {
             var urun = new Urun();
             try
             {
-
                 urun.Ad = txtUrunAd.Text;
                 urun.BirimFiyat = Convert.ToDecimal(txtFiyat.Text);
 
@@ -54,7 +53,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                     urun.Fotograf = resimStream.ToArray();
                 }
 
-               // ListeyiDoldur();
+                // ListeyiDoldur();
             }
             catch (Exception ex)
             {
@@ -176,5 +175,5 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 }
 
 
-        
-    
+
+
