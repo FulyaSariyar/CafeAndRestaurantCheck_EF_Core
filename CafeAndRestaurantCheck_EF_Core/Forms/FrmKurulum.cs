@@ -1,4 +1,7 @@
-﻿using System;
+﻿using CafeAndRestaurantCheck_EF_Core.Data;
+using CafeAndRestaurantCheck_EF_Core.Models;
+using CafeAndRestaurantCheck_EF_Core.Repository;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +15,22 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 {
     public partial class FrmKurulum : Form
     {
+        private KategoriRepo _kategoriRepo = new KategoriRepo();
         public FrmKurulum()
         {
             InitializeComponent();
+        }
+
+        private void btnKategoriEkle_Click(object sender, EventArgs e)
+        {
+            var kategori = new Kategori
+            {
+                Ad = "Kategori",
+                Aciklama = "açıklama",
+                Fotograf=
+
+            };
+            _kategoriRepo.Add(kategori);
         }
     }
 }
