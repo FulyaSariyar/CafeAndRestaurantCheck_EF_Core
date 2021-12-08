@@ -16,5 +16,12 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         {
             InitializeComponent();
         }
+
+        private void btnBinaKurulum_Click(object sender, EventArgs e)
+        {
+            FrmBinaBilgileri frmBinaBilgileri =new FrmBinaBilgileri();
+            frmBinaBilgileri.Show();
+
+        }
     }
 }

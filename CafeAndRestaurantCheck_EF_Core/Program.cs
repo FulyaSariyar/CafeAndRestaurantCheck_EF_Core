@@ -1,3 +1,5 @@
+using CafeAndRestaurantCheck_EF_Core.Forms;
+
 namespace CafeAndRestaurantCheck_EF_Core
 {
     internal static class Program
@@ -9,7 +11,7 @@ namespace CafeAndRestaurantCheck_EF_Core
         static void Main()
         {
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+            Application.Run(new FrmKurulum());
         }
     }
 }
