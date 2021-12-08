@@ -31,6 +31,10 @@ namespace CafeAndRestaurantCheck_EF_Core.Repository.Abstracts
         {
             return predicate == null ? Table : Table.Where(predicate).AsQueryable();
         }
+        public virtual IQueryable<T> GetAll(Func<T, bool> predicate = null)
+        {
+            return predicate == null ? Table : Table.Where(predicate).AsQueryable();
+        }
         public virtual IQueryable<T> Get(string[] includes, Func<T, bool> predicate = null) //asiri Yükleme.
         {
             IQueryable<T> query = Table;

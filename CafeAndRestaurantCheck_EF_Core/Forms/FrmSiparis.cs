@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CafeAndRestaurantCheck_EF_Core.Data;
+using CafeAndRestaurantCheck_EF_Core.Repository;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,6 +14,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 {
     public partial class FrmSiparis : Form
     {
+       
         public FrmSiparis()
         {
             InitializeComponent();
