@@ -47,6 +47,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
+            this.btnKategoriListele = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -213,13 +214,15 @@
             // 
             // tableLayoutPanel7
             // 
-            this.tableLayoutPanel7.ColumnCount = 3;
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel7.ColumnCount = 4;
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.08169F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.08169F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.08169F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.75493F));
             this.tableLayoutPanel7.Controls.Add(this.btnKategoriSil, 2, 0);
             this.tableLayoutPanel7.Controls.Add(this.btnKategoriGuncelle, 1, 0);
             this.tableLayoutPanel7.Controls.Add(this.btnKategoriEkle, 0, 0);
+            this.tableLayoutPanel7.Controls.Add(this.btnKategoriListele, 3, 0);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 138);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
@@ -234,9 +237,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnKategoriSil.BackColor = System.Drawing.Color.Chocolate;
-            this.btnKategoriSil.Location = new System.Drawing.Point(419, 3);
+            this.btnKategoriSil.Location = new System.Drawing.Point(317, 3);
             this.btnKategoriSil.Name = "btnKategoriSil";
-            this.btnKategoriSil.Size = new System.Drawing.Size(204, 47);
+            this.btnKategoriSil.Size = new System.Drawing.Size(151, 47);
             this.btnKategoriSil.TabIndex = 2;
             this.btnKategoriSil.Text = "SİL";
             this.btnKategoriSil.UseVisualStyleBackColor = false;
@@ -247,9 +250,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnKategoriGuncelle.BackColor = System.Drawing.Color.Chocolate;
-            this.btnKategoriGuncelle.Location = new System.Drawing.Point(211, 3);
+            this.btnKategoriGuncelle.Location = new System.Drawing.Point(160, 3);
             this.btnKategoriGuncelle.Name = "btnKategoriGuncelle";
-            this.btnKategoriGuncelle.Size = new System.Drawing.Size(202, 47);
+            this.btnKategoriGuncelle.Size = new System.Drawing.Size(151, 47);
             this.btnKategoriGuncelle.TabIndex = 1;
             this.btnKategoriGuncelle.Text = "GÜNCELLE";
             this.btnKategoriGuncelle.UseVisualStyleBackColor = false;
@@ -262,7 +265,7 @@
             this.btnKategoriEkle.BackColor = System.Drawing.Color.Chocolate;
             this.btnKategoriEkle.Location = new System.Drawing.Point(3, 3);
             this.btnKategoriEkle.Name = "btnKategoriEkle";
-            this.btnKategoriEkle.Size = new System.Drawing.Size(202, 47);
+            this.btnKategoriEkle.Size = new System.Drawing.Size(151, 47);
             this.btnKategoriEkle.TabIndex = 0;
             this.btnKategoriEkle.Text = "EKLE";
             this.btnKategoriEkle.UseVisualStyleBackColor = false;
@@ -296,6 +299,17 @@
             this.label2.Size = new System.Drawing.Size(59, 15);
             this.label2.TabIndex = 0;
             this.label2.Text = "Açıklama:";
+            // 
+            // btnKategoriListele
+            // 
+            this.btnKategoriListele.BackColor = System.Drawing.Color.Chocolate;
+            this.btnKategoriListele.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnKategoriListele.Location = new System.Drawing.Point(474, 3);
+            this.btnKategoriListele.Name = "btnKategoriListele";
+            this.btnKategoriListele.Size = new System.Drawing.Size(149, 47);
+            this.btnKategoriListele.TabIndex = 3;
+            this.btnKategoriListele.Text = "Listele";
+            this.btnKategoriListele.UseVisualStyleBackColor = false;
             // 
             // FrmKurulum
             // 
@@ -340,5 +354,6 @@
         private Button btnKategoriGuncelle;
         private Button btnKategoriEkle;
         private PictureBox pictureBox1;
+        private Button btnKategoriListele;
     }
 }
