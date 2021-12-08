@@ -39,22 +39,22 @@
             this.txtAciklama = new System.Windows.Forms.TextBox();
             this.pbKategori = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgViewKategori = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.btnKategoriSil = new System.Windows.Forms.Button();
             this.btnKategoriGuncelle = new System.Windows.Forms.Button();
             this.btnKategoriEkle = new System.Windows.Forms.Button();
+            this.btnKategoriListele = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
-            this.btnKategoriListele = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbKategori)).BeginInit();
             this.tableLayoutPanel5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgViewKategori)).BeginInit();
             this.tableLayoutPanel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -192,7 +192,7 @@
             // 
             this.tableLayoutPanel5.ColumnCount = 1;
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.Controls.Add(this.dataGridView1, 0, 0);
+            this.tableLayoutPanel5.Controls.Add(this.dgViewKategori, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.tableLayoutPanel7, 0, 1);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 390);
@@ -203,14 +203,14 @@
             this.tableLayoutPanel5.Size = new System.Drawing.Size(632, 194);
             this.tableLayoutPanel5.TabIndex = 1;
             // 
-            // dataGridView1
+            // dgViewKategori
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 3);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 25;
-            this.dataGridView1.Size = new System.Drawing.Size(626, 129);
-            this.dataGridView1.TabIndex = 0;
+            this.dgViewKategori.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgViewKategori.Location = new System.Drawing.Point(3, 3);
+            this.dgViewKategori.Name = "dgViewKategori";
+            this.dgViewKategori.RowTemplate.Height = 25;
+            this.dgViewKategori.Size = new System.Drawing.Size(626, 129);
+            this.dgViewKategori.TabIndex = 0;
             // 
             // tableLayoutPanel7
             // 
@@ -243,6 +243,7 @@
             this.btnKategoriSil.TabIndex = 2;
             this.btnKategoriSil.Text = "SİL";
             this.btnKategoriSil.UseVisualStyleBackColor = false;
+            this.btnKategoriSil.Click += new System.EventHandler(this.btnKategoriSil_Click);
             // 
             // btnKategoriGuncelle
             // 
@@ -256,6 +257,7 @@
             this.btnKategoriGuncelle.TabIndex = 1;
             this.btnKategoriGuncelle.Text = "GÜNCELLE";
             this.btnKategoriGuncelle.UseVisualStyleBackColor = false;
+            this.btnKategoriGuncelle.Click += new System.EventHandler(this.btnKategoriGuncelle_Click);
             // 
             // btnKategoriEkle
             // 
@@ -270,6 +272,18 @@
             this.btnKategoriEkle.Text = "EKLE";
             this.btnKategoriEkle.UseVisualStyleBackColor = false;
             this.btnKategoriEkle.Click += new System.EventHandler(this.btnKategoriEkle_Click);
+            // 
+            // btnKategoriListele
+            // 
+            this.btnKategoriListele.BackColor = System.Drawing.Color.Chocolate;
+            this.btnKategoriListele.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnKategoriListele.Location = new System.Drawing.Point(474, 3);
+            this.btnKategoriListele.Name = "btnKategoriListele";
+            this.btnKategoriListele.Size = new System.Drawing.Size(149, 47);
+            this.btnKategoriListele.TabIndex = 3;
+            this.btnKategoriListele.Text = "Listele";
+            this.btnKategoriListele.UseVisualStyleBackColor = false;
+            this.btnKategoriListele.Click += new System.EventHandler(this.btnKategoriListele_Click);
             // 
             // pictureBox1
             // 
@@ -300,17 +314,6 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "Açıklama:";
             // 
-            // btnKategoriListele
-            // 
-            this.btnKategoriListele.BackColor = System.Drawing.Color.Chocolate;
-            this.btnKategoriListele.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnKategoriListele.Location = new System.Drawing.Point(474, 3);
-            this.btnKategoriListele.Name = "btnKategoriListele";
-            this.btnKategoriListele.Size = new System.Drawing.Size(149, 47);
-            this.btnKategoriListele.TabIndex = 3;
-            this.btnKategoriListele.Text = "Listele";
-            this.btnKategoriListele.UseVisualStyleBackColor = false;
-            // 
             // FrmKurulum
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -326,7 +329,7 @@
             this.tableLayoutPanel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbKategori)).EndInit();
             this.tableLayoutPanel5.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgViewKategori)).EndInit();
             this.tableLayoutPanel7.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
@@ -348,7 +351,7 @@
         private TableLayoutPanel tableLayoutPanel6;
         private Label label2;
         private TableLayoutPanel tableLayoutPanel5;
-        private DataGridView dataGridView1;
+        private DataGridView dgViewKategori;
         private TableLayoutPanel tableLayoutPanel7;
         private Button btnKategoriSil;
         private Button btnKategoriGuncelle;

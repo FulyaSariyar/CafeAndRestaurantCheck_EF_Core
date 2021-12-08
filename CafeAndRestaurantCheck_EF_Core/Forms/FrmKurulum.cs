@@ -16,6 +16,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 {
     public partial class FrmKurulum : Form
     {
+        private CafeContext _dbContext = new CafeContext();
         private KategoriRepo _kategoriRepo = new KategoriRepo();
         public FrmKurulum()
         {
@@ -54,6 +55,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                 kategori.Fotograf = resimStream.ToArray();
             }
             
+            
         }
 
         private void pbKategori_Click(object sender, EventArgs e)
@@ -70,6 +72,22 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             {
                 pbKategori.ImageLocation = dialog.FileName;
             }
+        }
+
+        private void btnKategoriGuncelle_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void btnKategoriSil_Click(object sender, EventArgs e)
+        {
+
+           
+        }
+
+        private void btnKategoriListele_Click(object sender, EventArgs e)
+        {
+           
         }
     }
 
