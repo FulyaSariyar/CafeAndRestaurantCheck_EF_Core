@@ -122,9 +122,6 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                 //ListeyiDoldur();
             }
         }
-    }
-}
-
 
         private void btnKategoriEkle_Click(object sender, EventArgs e)
         {
@@ -133,7 +130,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             {
                 kategori.Ad = txtKategoriAd.Text;
                 kategori.Aciklama = txtAciklama.Text;
-                
+
 
                 if (pbKategori.Image != null)
                 {
@@ -141,7 +138,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                     pbKategori.Image.Save(resimStream, ImageFormat.Jpeg);
                     kategori.Fotograf = resimStream.ToArray();
                 }
-         
+
                 _kategoriRepo.Add(kategori);
 
             }
@@ -157,7 +154,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
                 kategori.Fotograf = resimStream.ToArray();
             }
-            
+
         }
 
         private void pbKategori_Click(object sender, EventArgs e)
@@ -176,5 +173,8 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             }
         }
     }
-
 }
+
+
+        
+    
