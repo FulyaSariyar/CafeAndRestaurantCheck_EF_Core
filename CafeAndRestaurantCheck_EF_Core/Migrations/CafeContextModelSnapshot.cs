@@ -40,7 +40,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BinaBilgileri");
+                    b.ToTable("BinaBilgileri", (string)null);
                 });
 
             modelBuilder.Entity("CafeAndRestaurantCheck_EF_Core.Models.Kategori", b =>
@@ -79,7 +79,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Kategoriler");
+                    b.ToTable("Kategoriler", (string)null);
                 });
 
             modelBuilder.Entity("CafeAndRestaurantCheck_EF_Core.Models.Siparis", b =>
@@ -125,7 +125,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Migrations
 
                     b.HasIndex("UrunId");
 
-                    b.ToTable("Siparisler");
+                    b.ToTable("Siparisler", (string)null);
                 });
 
             modelBuilder.Entity("CafeAndRestaurantCheck_EF_Core.Models.Urun", b =>
@@ -164,7 +164,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Migrations
 
                     b.HasIndex("KategoriId");
 
-                    b.ToTable("Urunler");
+                    b.ToTable("Urunler", (string)null);
                 });
 
             modelBuilder.Entity("CafeAndRestaurantCheck_EF_Core.Models.Siparis", b =>
