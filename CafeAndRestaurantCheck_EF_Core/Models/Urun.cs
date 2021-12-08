@@ -19,6 +19,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Models
         [Required]
         public decimal BirimFiyat { get; set; } = 0;
         public int KategoriId { get; set; }
+        public byte[] Fotograf { get; set; }
 
         [ForeignKey(nameof(KategoriId))]
         public Kategori Kategori { get; set; }
