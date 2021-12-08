@@ -18,27 +18,11 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
     {
         private CafeContext _dbContext = new CafeContext();
         private UrunRepo _urunRepo = new UrunRepo();
-
-        private CafeContext _dbContext = new CafeContext();
         private KategoriRepo _kategoriRepo = new KategoriRepo();
         public FrmKurulum()
         {
             InitializeComponent();          
         }
-        //private void ListeyiDoldur()
-        //{
-        //    lstUrunler.Items.Clear();
-
-        //    foreach (Urun item in _dbContext.Urunler)
-        //    {
-        //        if (item.Kategori.Ad == cmbKategori.Text)
-        //        {
-        //            lstUrunler.Items.Add(item);
-        //        }
-        //    }
-
-        //    
-        //}
         private void btnKaydet_Click(object sender, EventArgs e)
         {
             var urun = new Urun();
@@ -195,6 +179,8 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             frmBinaBilgileri.Show();
 
         }
+
+       
     }
 }
 
