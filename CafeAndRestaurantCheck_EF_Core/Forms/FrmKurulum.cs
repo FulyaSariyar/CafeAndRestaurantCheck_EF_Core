@@ -19,6 +19,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         private CafeContext _dbContext = new CafeContext();
         private UrunRepo _urunRepo = new UrunRepo();
 
+        private CafeContext _dbContext = new CafeContext();
         private KategoriRepo _kategoriRepo = new KategoriRepo();
         public FrmKurulum()
         {
@@ -170,6 +171,29 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             {
                 pbKategori.ImageLocation = dialog.FileName;
             }
+        }
+
+        private void btnKategoriGuncelle_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void btnKategoriSil_Click(object sender, EventArgs e)
+        {
+
+           
+        }
+
+        private void btnKategoriListele_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void btnBinaKurulum_Click(object sender, EventArgs e)
+        {
+            FrmBinaBilgileri frmBinaBilgileri =new FrmBinaBilgileri();
+            frmBinaBilgileri.Show();
+
         }
     }
 }

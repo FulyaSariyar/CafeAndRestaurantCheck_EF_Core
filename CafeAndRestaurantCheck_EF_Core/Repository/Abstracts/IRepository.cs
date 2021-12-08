@@ -11,6 +11,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Repository.Abstracts
     {
         T GetById(TId id);
         IQueryable<T> Get(Func<T, bool> predicate = null);
+        IQueryable<T> GetAll(Func<T, bool> predicate = null);// IQueryable ile verinin nasıl gelleceğini tutuyoruz.Yani bir türe bağlı kısıtlamıyoruz
         void Add(T entity, bool isSaveLater = false);
         void Remove(T entity, bool isSaveLater = false);
         void Update(T entity, bool isSaveLater = false);
