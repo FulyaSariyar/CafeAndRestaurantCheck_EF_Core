@@ -19,6 +19,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         private CafeContext _dbContext = new CafeContext();
         private UrunRepo _urunRepo = new UrunRepo();
 
+        private KategoriRepo _kategoriRepo = new KategoriRepo();
         public FrmKurulum()
         {
             InitializeComponent();
@@ -124,3 +125,56 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
     }
 }
 
+
+        private void btnKategoriEkle_Click(object sender, EventArgs e)
+        {
+            var kategori = new Kategori();
+            try
+            {
+                kategori.Ad = txtKategoriAd.Text;
+                kategori.Aciklama = txtAciklama.Text;
+                
+
+                if (pbKategori.Image != null)
+                {
+                    MemoryStream resimStream = new MemoryStream();
+                    pbKategori.Image.Save(resimStream, ImageFormat.Jpeg);
+                    kategori.Fotograf = resimStream.ToArray();
+                }
+         
+                _kategoriRepo.Add(kategori);
+
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message, "Bir hata oluştu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            if (pbKategori.Image != null)
+            {
+                MemoryStream resimStream = new MemoryStream();
+                pbKategori.Image.Save(resimStream, ImageFormat.Jpeg);
+
+                kategori.Fotograf = resimStream.ToArray();
+            }
+            
+        }
+
+        private void pbKategori_Click(object sender, EventArgs e)
+        {
+
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Multiselect = false;
+            dialog.Title = "Bir fotoğraf seçiniz";
+            dialog.Filter = "Resim Dosyaları | *.jpeg; *.jpg; *.png; *.jfif";
+            dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+            DialogResult result = dialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                pbKategori.ImageLocation = dialog.FileName;
+            }
+        }
+    }
+
+}
