@@ -581,6 +581,8 @@
             this.dgViewKategori.RowTemplate.Height = 25;
             this.dgViewKategori.Size = new System.Drawing.Size(455, 154);
             this.dgViewKategori.TabIndex = 0;
+            this.dgViewKategori.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgViewKategori_CellClick);
+           
             // 
             // tableLayoutPanel7
             // 
