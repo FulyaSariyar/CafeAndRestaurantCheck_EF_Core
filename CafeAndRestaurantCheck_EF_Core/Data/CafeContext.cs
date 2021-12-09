@@ -21,7 +21,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer( @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = CafeDb; Integrated Security = True;");
+                optionsBuilder.UseSqlServer( @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = CafeDb1; Integrated Security = True;");
             }
             //DbContext.Entry<Urun>(urun).State = Microsoft.EntityFrameworkCore.EntityState.Modified
         }

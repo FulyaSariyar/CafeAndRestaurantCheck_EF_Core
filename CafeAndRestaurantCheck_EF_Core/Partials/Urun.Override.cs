@@ -11,9 +11,11 @@ namespace CafeAndRestaurantCheck_EF_Core.Models
         public override string ToString()
         {
             return $"{Ad} - {BirimFiyat}";
+
         }
+
     }
 
-   
+
 
 }

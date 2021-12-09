@@ -1,6 +1,7 @@
 ﻿using CafeAndRestaurantCheck_EF_Core.Data;
 using CafeAndRestaurantCheck_EF_Core.Models;
 using CafeAndRestaurantCheck_EF_Core.Repository;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
