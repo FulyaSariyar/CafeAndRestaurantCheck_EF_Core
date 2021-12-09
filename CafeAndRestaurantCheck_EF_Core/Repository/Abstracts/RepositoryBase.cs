@@ -57,6 +57,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Repository.Abstracts
         public virtual void Remove(T entity, bool isSaveLater = false)
         {
             Table.Remove(entity);
+            _context.Entry(entity).State = EntityState.Deleted;
             if (!isSaveLater)
                 this.Save();
         }
@@ -65,6 +66,8 @@ namespace CafeAndRestaurantCheck_EF_Core.Repository.Abstracts
 
         public virtual void Update(T entity, bool isSaveLater = false)
         {
+            
+           // _context.Entry(entity).State = EntityState.Modified;
             Table.Update(entity);
             if (!isSaveLater)
                 this.Save();

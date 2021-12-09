@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace CafeAndRestaurantCheck_EF_Core.Models
 {
     [Table(name: "Urunler")]
-    public class Urun : BaseEntity, IKey<int>
+    public partial class Urun : BaseEntity, IKey<int>
     {
         [Key]
         public int Id { get; set; }

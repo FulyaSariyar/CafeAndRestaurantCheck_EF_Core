@@ -37,7 +37,7 @@
             this.cmbKategori = new System.Windows.Forms.ComboBox();
             this.txtUrunAd = new System.Windows.Forms.TextBox();
             this.txtFiyat = new System.Windows.Forms.TextBox();
-            this.pbResim = new System.Windows.Forms.PictureBox();
+            this.pbUrun = new System.Windows.Forms.PictureBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -73,7 +73,7 @@
             this.tableLayoutPanel8.SuspendLayout();
             this.tableLayoutPanel9.SuspendLayout();
             this.tableLayoutPanel10.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbResim)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbUrun)).BeginInit();
             this.tableLayoutPanel11.SuspendLayout();
             this.tableLayoutPanel12.SuspendLayout();
             this.tableLayoutPanel13.SuspendLayout();
@@ -172,7 +172,7 @@
             this.tableLayoutPanel10.Controls.Add(this.cmbKategori, 1, 0);
             this.tableLayoutPanel10.Controls.Add(this.txtUrunAd, 1, 1);
             this.tableLayoutPanel10.Controls.Add(this.txtFiyat, 1, 2);
-            this.tableLayoutPanel10.Controls.Add(this.pbResim, 1, 3);
+            this.tableLayoutPanel10.Controls.Add(this.pbUrun, 1, 3);
             this.tableLayoutPanel10.Controls.Add(this.label5, 0, 0);
             this.tableLayoutPanel10.Controls.Add(this.label6, 0, 1);
             this.tableLayoutPanel10.Controls.Add(this.label7, 0, 3);
@@ -219,17 +219,18 @@
             this.txtFiyat.Size = new System.Drawing.Size(160, 23);
             this.txtFiyat.TabIndex = 50;
             // 
-            // pbResim
+            // pbUrun
             // 
-            this.pbResim.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbResim.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pbResim.Location = new System.Drawing.Point(159, 235);
-            this.pbResim.Margin = new System.Windows.Forms.Padding(23, 16, 23, 16);
-            this.pbResim.Name = "pbResim";
-            this.pbResim.Size = new System.Drawing.Size(160, 190);
-            this.pbResim.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbResim.TabIndex = 51;
-            this.pbResim.TabStop = false;
+            this.pbUrun.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbUrun.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pbUrun.Location = new System.Drawing.Point(159, 235);
+            this.pbUrun.Margin = new System.Windows.Forms.Padding(23, 16, 23, 16);
+            this.pbUrun.Name = "pbUrun";
+            this.pbUrun.Size = new System.Drawing.Size(160, 190);
+            this.pbUrun.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbUrun.TabIndex = 51;
+            this.pbUrun.TabStop = false;
+            this.pbUrun.Click += new System.EventHandler(this.pbUrun_Click);
             // 
             // label5
             // 
@@ -317,6 +318,7 @@
             this.btnListele.TabIndex = 47;
             this.btnListele.Text = "Listele";
             this.btnListele.UseVisualStyleBackColor = false;
+            this.btnListele.Click += new System.EventHandler(this.btnListele_Click);
             // 
             // btnSil
             // 
@@ -332,6 +334,7 @@
             this.btnSil.TabIndex = 46;
             this.btnSil.Text = "Sil";
             this.btnSil.UseVisualStyleBackColor = false;
+            this.btnSil.Click += new System.EventHandler(this.btnSil_Click);
             // 
             // tableLayoutPanel12
             // 
@@ -360,6 +363,7 @@
             this.lstUrunler.Name = "lstUrunler";
             this.lstUrunler.Size = new System.Drawing.Size(317, 441);
             this.lstUrunler.TabIndex = 39;
+            this.lstUrunler.SelectedIndexChanged += new System.EventHandler(this.lstUrunler_SelectedIndexChanged);
             // 
             // tableLayoutPanel13
             // 
@@ -391,6 +395,7 @@
             this.btnGuncelle.TabIndex = 40;
             this.btnGuncelle.Text = "Güncelle";
             this.btnGuncelle.UseVisualStyleBackColor = false;
+            this.btnGuncelle.Click += new System.EventHandler(this.btnGuncelle_Click);
             // 
             // btnKaydet
             // 
@@ -407,6 +412,7 @@
             this.btnKaydet.TabIndex = 38;
             this.btnKaydet.Text = "Ekle";
             this.btnKaydet.UseVisualStyleBackColor = false;
+            this.btnKaydet.Click += new System.EventHandler(this.btnKaydet_Click);
             // 
             // tableLayoutPanel2
             // 
@@ -690,13 +696,14 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FrmKurulum";
             this.Text = "FrmKurulum";
+            this.Load += new System.EventHandler(this.FrmKurulum_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel8.ResumeLayout(false);
             this.tableLayoutPanel9.ResumeLayout(false);
             this.tableLayoutPanel10.ResumeLayout(false);
             this.tableLayoutPanel10.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbResim)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbUrun)).EndInit();
             this.tableLayoutPanel11.ResumeLayout(false);
             this.tableLayoutPanel12.ResumeLayout(false);
             this.tableLayoutPanel13.ResumeLayout(false);
@@ -739,7 +746,7 @@
         private ComboBox cmbKategori;
         private TextBox txtUrunAd;
         private TextBox txtFiyat;
-        private PictureBox pbResim;
+        private PictureBox pbUrun;
         private Label label5;
         private Label label6;
         private Label label7;
