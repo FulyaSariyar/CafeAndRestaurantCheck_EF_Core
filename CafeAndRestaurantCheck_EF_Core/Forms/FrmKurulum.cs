@@ -118,7 +118,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             if (string.IsNullOrEmpty(cmbKategori.Text))
             {
                 MessageBox.Show("Kategori alanı boş geçilemez.");
-                return;                
+                return;
             }
 
             Urun seciliUrun = (Urun)lstUrunler.SelectedItem;
@@ -192,13 +192,11 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                     UrunListele();
                 }
             }
-
-           
-                MessageBox.Show(ex.Message);
-                _dbContext = new CafeContext();
-            }
-
+            _dbContext = new CafeContext();
         }
+
+    
+    
 
         private void btnKategoriEkle_Click(object sender, EventArgs e)
         {
