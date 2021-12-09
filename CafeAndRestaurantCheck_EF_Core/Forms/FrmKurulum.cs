@@ -38,7 +38,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                     urun.Fotograf = resimStream.ToArray();
                 }
 
-                // ListeyiDoldur();
+                
             }
             catch (Exception ex)
             {
@@ -53,7 +53,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                 urun.Fotograf = resimStream.ToArray();
             }
             _urunRepo.Add(urun);
-            //ListeyiDoldur();
+           
         }
 
         private void pbResim_Click(object sender, EventArgs e)
@@ -101,10 +101,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                 MessageBox.Show(ex.Message);
                 _dbContext = new CafeContext();
             }
-            finally
-            {
-                //ListeyiDoldur();
-            }
+            
         }
 
         private void btnKategoriEkle_Click(object sender, EventArgs e)
@@ -124,6 +121,8 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                 }
 
                 _kategoriRepo.Add(kategori);
+                ListeleKategori();
+               
 
             }
             catch (Exception ex)
@@ -138,6 +137,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
                 kategori.Fotograf = resimStream.ToArray();
             }
+            
 
         }
 
@@ -157,20 +157,27 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             }
         }
 
-        private void btnKategoriGuncelle_Click(object sender, EventArgs e)
+        private void ListeleKategori()
         {
-           
+            dgViewKategori.DataSource = null;
+            dgViewKategori.DataSource = _kategoriRepo.GetAll().Where(x => x.IsDeleted == false).ToList();
         }
-
         private void btnKategoriSil_Click(object sender, EventArgs e)
         {
-
+            var seciliKategori = (Kategori)this.dgViewKategori.CurrentRow.DataBoundItem;
+            var kategori = _kategoriRepo.GetAll().FirstOrDefault(x => x.Id == seciliKategori.Id) as Kategori;
+            //var kategori = _kategoriRepo.GetById(seciliKategori.Id) as Kategori;
+            _kategoriRepo.Remove(kategori);
+            ListeleKategori();
            
+
+
+
         }
 
         private void btnKategoriListele_Click(object sender, EventArgs e)
         {
-           
+            dgViewKategori.DataSource = _kategoriRepo.GetAll().ToList();
         }
 
         private void btnBinaKurulum_Click(object sender, EventArgs e)
@@ -180,7 +187,22 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
         }
 
-       
+
+        private void btnKategoriGuncelle_Click_1(object sender, EventArgs e)
+        {
+            var seciliKategori = (Kategori)this.dgViewKategori.CurrentRow.DataBoundItem;
+            var kategori = _kategoriRepo.GetById(seciliKategori.Id) as Kategori;
+            seciliKategori.Ad = txtKategoriAd.Text;
+            seciliKategori.Aciklama = txtAciklama.Text;
+            seciliKategori.Fotograf = (byte[])new ImageConverter().ConvertTo(pbKategori.Image, typeof(byte[]));
+            _kategoriRepo.Update(kategori);
+            ListeleKategori();
+
+
+
+        }
+
+        
     }
 }
 
