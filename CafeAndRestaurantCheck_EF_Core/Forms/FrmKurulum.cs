@@ -19,44 +19,64 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         private CafeContext _dbContext = new CafeContext();
         private UrunRepo _urunRepo = new UrunRepo();
         private KategoriRepo _kategoriRepo = new KategoriRepo();
+
+        private void FrmKurulum_Load(object sender, EventArgs e)
+        {
+            cmbKategori.DataSource = _kategoriRepo.GetAll().ToList();
+            cmbKategori.DisplayMember = "Ad";
+        }
         public FrmKurulum()
         {
-            InitializeComponent();          
+            InitializeComponent();
+        }
+
+        private void UrunListele()
+        {
+            lstUrunler.DataSource = null;
+            lstUrunler.DataSource = _urunRepo.GetAll().Where(x => x.IsDeleted == false).ToList();
         }
         private void btnKaydet_Click(object sender, EventArgs e)
         {
+
+            if (cmbKategori.SelectedItem != null)
+            {
+                seciliKategori = (Kategori)cmbKategori.SelectedItem;
+            }
+            else
+            {
+                seciliKategori = null;
+            }
             var urun = new Urun();
             try
             {
                 urun.Ad = txtUrunAd.Text;
                 urun.BirimFiyat = Convert.ToDecimal(txtFiyat.Text);
+                urun.KategoriId = seciliKategori.Id;
 
-                if (pbResim.Image != null)
+                if (pbUrun.Image != null)
                 {
                     MemoryStream resimStream = new MemoryStream();
-                    pbResim.Image.Save(resimStream, ImageFormat.Jpeg);
+                    pbUrun.Image.Save(resimStream, ImageFormat.Jpeg);
                     urun.Fotograf = resimStream.ToArray();
                 }
-
-                // ListeyiDoldur();
             }
             catch (Exception ex)
             {
 
                 MessageBox.Show(ex.Message, "Bir hata oluştu", MessageBoxButtons.OK, MessageBoxIcon.Error);
             };
-            if (pbResim.Image != null)
+            if (pbUrun.Image != null)
             {
                 MemoryStream resimStream = new MemoryStream();
-                pbResim.Image.Save(resimStream, ImageFormat.Jpeg);
+                pbUrun.Image.Save(resimStream, ImageFormat.Jpeg);
 
                 urun.Fotograf = resimStream.ToArray();
             }
             _urunRepo.Add(urun);
-            //ListeyiDoldur();
+            UrunListele();
         }
 
-        private void pbResim_Click(object sender, EventArgs e)
+        private void pbUrun_Click(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Multiselect = false;
@@ -67,15 +87,39 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             DialogResult result = dialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                pbResim.ImageLocation = dialog.FileName;
+                pbUrun.ImageLocation = dialog.FileName;
+            }
+
+        }
+        private void lstUrunler_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lstUrunler.SelectedItem == null) return; //index çaıştığında null gelebilir. Hata verme.
+
+            // seciliUrun = lstUrunler.SelectedItem as Urun;
+            Urun seciliUrun = (Urun)lstUrunler.SelectedItem;
+            txtUrunAd.Text = seciliUrun.Ad;
+            txtFiyat.Text = seciliUrun.BirimFiyat.ToString();
+            cmbKategori.Text = seciliUrun.Kategori.Ad;
+
+            if (seciliUrun.Fotograf != null)
+            {
+                MemoryStream stream = new MemoryStream(seciliUrun.Fotograf);
+                pbUrun.Image = Image.FromStream(stream);
             }
         }
-
 
         private Urun seciliUrun;
         private Kategori seciliKategori;
         private void btnGuncelle_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(cmbKategori.Text))
+            {
+                MessageBox.Show("Kategori alanı boş geçilemez.");
+                return;                
+            }
+
+            Urun seciliUrun = (Urun)lstUrunler.SelectedItem;
+
             if (seciliUrun == null) return;
 
             if (cmbKategori.SelectedItem != null)
@@ -88,23 +132,65 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             }
             try
             {
-                var urun = _dbContext.Urunler.First(x => x.Id == seciliUrun.Id);
+                //var urun = _urunRepo.GetAll().First(x => x.Id == seciliUrun.Id);
+                var urun = _urunRepo.GetById(seciliUrun.Id);
 
                 urun.Ad = txtUrunAd.Text;
                 urun.BirimFiyat = Convert.ToDecimal(txtFiyat.Text);
-                urun.KategoriId = seciliUrun.Id;
+                urun.KategoriId = seciliKategori.Id;
+
+                if (pbUrun.Image != null)
+                {
+                    MemoryStream resimStream = new MemoryStream();
+                    pbUrun.Image.Save(resimStream, ImageFormat.Jpeg);
+
+                    urun.Fotograf = resimStream.ToArray();
+                }
 
                 _urunRepo.Update(urun);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("KAtegori boş geçilemez.");
                 _dbContext = new CafeContext();
             }
             finally
             {
-                //ListeyiDoldur();
+                UrunListele();
             }
+        }
+
+        private void btnListele_Click(object sender, EventArgs e)
+        {
+            UrunListele();
+        }
+
+        private void btnSil_Click(object sender, EventArgs e)
+        {
+            Urun seciliUrun = (Urun)lstUrunler.SelectedItem;
+
+            if (seciliUrun == null) return;
+
+            DialogResult cevap = MessageBox.Show($"{seciliUrun} yi silmek istiyor musunuz?", "Silme onayı", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (cevap == DialogResult.Yes)
+            {
+                try
+                {
+                    _urunRepo.Remove(seciliUrun);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    _dbContext = new CafeContext();
+                }
+                finally
+                {
+                    UrunListele();
+                }
+            }
+
+           
         }
 
         private void btnKategoriEkle_Click(object sender, EventArgs e)
@@ -180,7 +266,11 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
         }
 
-       
+     
+
+        
+
+        
     }
 }
 

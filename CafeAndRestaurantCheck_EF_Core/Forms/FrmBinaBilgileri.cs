@@ -68,8 +68,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         }
 
       
-     
-
+   
         private void btnListele_Click(object sender, EventArgs e)
         {
             dtgrdBinaBilgileri.DataSource= _binaRepo.GetAll().ToList();
