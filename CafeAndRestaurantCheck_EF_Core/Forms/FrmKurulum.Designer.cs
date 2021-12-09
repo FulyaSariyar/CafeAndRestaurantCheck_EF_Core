@@ -63,9 +63,9 @@
             this.dgViewKategori = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.btnKategoriSil = new System.Windows.Forms.Button();
-            this.btnKategoriGuncelle = new System.Windows.Forms.Button();
             this.btnKategoriEkle = new System.Windows.Forms.Button();
             this.btnKategoriListele = new System.Windows.Forms.Button();
+            this.btnKategoriGuncelle = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             btnBinaKurulum = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
@@ -554,6 +554,7 @@
             this.pbKategori.Margin = new System.Windows.Forms.Padding(23, 16, 23, 16);
             this.pbKategori.Name = "pbKategori";
             this.pbKategori.Size = new System.Drawing.Size(231, 84);
+            this.pbKategori.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbKategori.TabIndex = 5;
             this.pbKategori.TabStop = false;
             this.pbKategori.Click += new System.EventHandler(this.pbKategori_Click);
@@ -586,6 +587,8 @@
             this.dgViewKategori.RowTemplate.Height = 25;
             this.dgViewKategori.Size = new System.Drawing.Size(455, 154);
             this.dgViewKategori.TabIndex = 0;
+            this.dgViewKategori.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgViewKategori_CellClick);
+           
             // 
             // tableLayoutPanel7
             // 
@@ -595,9 +598,9 @@
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel7.Controls.Add(this.btnKategoriSil, 2, 0);
-            this.tableLayoutPanel7.Controls.Add(this.btnKategoriGuncelle, 1, 0);
             this.tableLayoutPanel7.Controls.Add(this.btnKategoriEkle, 0, 0);
             this.tableLayoutPanel7.Controls.Add(this.btnKategoriListele, 3, 0);
+            this.tableLayoutPanel7.Controls.Add(this.btnKategoriGuncelle, 1, 0);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 160);
             this.tableLayoutPanel7.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -613,6 +616,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnKategoriSil.BackColor = System.Drawing.Color.Chocolate;
+            this.btnKategoriSil.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnKategoriSil.ForeColor = System.Drawing.Color.White;
             this.btnKategoriSil.Location = new System.Drawing.Point(235, 8);
             this.btnKategoriSil.Margin = new System.Windows.Forms.Padding(9, 8, 9, 8);
             this.btnKategoriSil.Name = "btnKategoriSil";
@@ -622,27 +627,14 @@
             this.btnKategoriSil.UseVisualStyleBackColor = false;
             this.btnKategoriSil.Click += new System.EventHandler(this.btnKategoriSil_Click);
             // 
-            // btnKategoriGuncelle
-            // 
-            this.btnKategoriGuncelle.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnKategoriGuncelle.BackColor = System.Drawing.Color.Chocolate;
-            this.btnKategoriGuncelle.Location = new System.Drawing.Point(122, 8);
-            this.btnKategoriGuncelle.Margin = new System.Windows.Forms.Padding(9, 8, 9, 8);
-            this.btnKategoriGuncelle.Name = "btnKategoriGuncelle";
-            this.btnKategoriGuncelle.Size = new System.Drawing.Size(95, 55);
-            this.btnKategoriGuncelle.TabIndex = 1;
-            this.btnKategoriGuncelle.Text = "GÜNCELLE";
-            this.btnKategoriGuncelle.UseVisualStyleBackColor = false;
-            this.btnKategoriGuncelle.Click += new System.EventHandler(this.btnKategoriGuncelle_Click);
-            // 
             // btnKategoriEkle
             // 
             this.btnKategoriEkle.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnKategoriEkle.BackColor = System.Drawing.Color.Chocolate;
+            this.btnKategoriEkle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnKategoriEkle.ForeColor = System.Drawing.Color.White;
             this.btnKategoriEkle.Location = new System.Drawing.Point(9, 8);
             this.btnKategoriEkle.Margin = new System.Windows.Forms.Padding(9, 8, 9, 8);
             this.btnKategoriEkle.Name = "btnKategoriEkle";
@@ -656,14 +648,32 @@
             // 
             this.btnKategoriListele.BackColor = System.Drawing.Color.Chocolate;
             this.btnKategoriListele.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnKategoriListele.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnKategoriListele.ForeColor = System.Drawing.Color.White;
             this.btnKategoriListele.Location = new System.Drawing.Point(348, 8);
             this.btnKategoriListele.Margin = new System.Windows.Forms.Padding(9, 8, 9, 8);
             this.btnKategoriListele.Name = "btnKategoriListele";
             this.btnKategoriListele.Size = new System.Drawing.Size(98, 55);
             this.btnKategoriListele.TabIndex = 3;
-            this.btnKategoriListele.Text = "Listele";
+            this.btnKategoriListele.Text = "LİSTELE";
             this.btnKategoriListele.UseVisualStyleBackColor = false;
             this.btnKategoriListele.Click += new System.EventHandler(this.btnKategoriListele_Click);
+            // 
+            // btnKategoriGuncelle
+            // 
+            this.btnKategoriGuncelle.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnKategoriGuncelle.BackColor = System.Drawing.Color.Chocolate;
+            this.btnKategoriGuncelle.ForeColor = System.Drawing.Color.White;
+            this.btnKategoriGuncelle.Location = new System.Drawing.Point(123, 10);
+            this.btnKategoriGuncelle.Margin = new System.Windows.Forms.Padding(10);
+            this.btnKategoriGuncelle.Name = "btnKategoriGuncelle";
+            this.btnKategoriGuncelle.Size = new System.Drawing.Size(93, 51);
+            this.btnKategoriGuncelle.TabIndex = 4;
+            this.btnKategoriGuncelle.Text = "GÜNCELLE";
+            this.btnKategoriGuncelle.UseVisualStyleBackColor = false;
+            this.btnKategoriGuncelle.Click += new System.EventHandler(this.btnKategoriGuncelle_Click_1);
             // 
             // label2
             // 
@@ -727,7 +737,6 @@
         private DataGridView dgViewKategori;
         private TableLayoutPanel tableLayoutPanel7;
         private Button btnKategoriSil;
-        private Button btnKategoriGuncelle;
         private Button btnKategoriEkle;
         private PictureBox pictureBox1;
         private Button btnKategoriListele;
@@ -751,5 +760,6 @@
         private TableLayoutPanel tableLayoutPanel13;
         private Button btnGuncelle;
         private Button btnKaydet;
+        private Button btnKategoriGuncelle;
     }
 }
