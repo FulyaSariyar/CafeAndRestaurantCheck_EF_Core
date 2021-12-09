@@ -21,7 +21,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         private KategoriRepo _kategoriRepo = new KategoriRepo();
         public FrmKurulum()
         {
-            InitializeComponent();          
+            InitializeComponent();
         }
         private void btnKaydet_Click(object sender, EventArgs e)
         {
@@ -38,7 +38,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                     urun.Fotograf = resimStream.ToArray();
                 }
 
-                
+
             }
             catch (Exception ex)
             {
@@ -53,7 +53,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                 urun.Fotograf = resimStream.ToArray();
             }
             _urunRepo.Add(urun);
-           
+
         }
 
         private void pbResim_Click(object sender, EventArgs e)
@@ -101,7 +101,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                 MessageBox.Show(ex.Message);
                 _dbContext = new CafeContext();
             }
-            
+
         }
 
         private void btnKategoriEkle_Click(object sender, EventArgs e)
@@ -123,7 +123,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
                 _kategoriRepo.Add(kategori);
                 ListeleKategori();
-               
+
 
             }
             catch (Exception ex)
@@ -138,7 +138,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
                 kategori.Fotograf = resimStream.ToArray();
             }
-            
+
 
         }
 
@@ -179,9 +179,6 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             //var kategori = _kategoriRepo.GetById(seciliKategori.Id) as Kategori;
 
 
-
-
-
         }
 
         private void btnKategoriListele_Click(object sender, EventArgs e)
@@ -191,7 +188,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
         private void btnBinaKurulum_Click(object sender, EventArgs e)
         {
-            FrmBinaBilgileri frmBinaBilgileri =new FrmBinaBilgileri();
+            FrmBinaBilgileri frmBinaBilgileri = new FrmBinaBilgileri();
             frmBinaBilgileri.Show();
 
         }
@@ -206,6 +203,8 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             seciliKategori.Ad = txtKategoriAd.Text;
             seciliKategori.Aciklama = txtAciklama.Text;
             seciliKategori.Fotograf = (byte[])new ImageConverter().ConvertTo(pbKategori.Image, typeof(byte[]));
+
+
             _kategoriRepo.Update(kategori);
             ListeleKategori();
 
@@ -213,7 +212,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
         }
 
-       
+
 
         private void dgViewKategori_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -226,6 +225,19 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                 pbKategori.Image = Image.FromStream(stream);
 
             }
+        }
+
+        private void txtKategoriAd_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+
+           //if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != ' '))
+           // {
+           //     e.Handled = true;
+           // }
+
+
+
         }
     }
 }

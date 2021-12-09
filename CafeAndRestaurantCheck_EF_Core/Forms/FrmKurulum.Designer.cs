@@ -530,6 +530,7 @@
             this.txtKategoriAd.Name = "txtKategoriAd";
             this.txtKategoriAd.Size = new System.Drawing.Size(231, 23);
             this.txtKategoriAd.TabIndex = 3;
+            this.txtKategoriAd.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtKategoriAd_KeyPress);
             // 
             // txtAciklama
             // 
@@ -582,7 +583,6 @@
             this.dgViewKategori.Size = new System.Drawing.Size(455, 154);
             this.dgViewKategori.TabIndex = 0;
             this.dgViewKategori.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgViewKategori_CellClick);
-           
             // 
             // tableLayoutPanel7
             // 
