@@ -78,8 +78,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         }
 
       
-     
-
+   
         private void btnListele_Click(object sender, EventArgs e)
         {
             Listele();
@@ -129,5 +128,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         {
             this.Close();
         }
+
+        
     }
 }

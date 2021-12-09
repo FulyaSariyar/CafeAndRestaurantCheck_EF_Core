@@ -13,12 +13,12 @@ namespace CafeAndRestaurantCheck_EF_Core.Repository
 {
     public class UrunRepo : RepositoryBase<Urun, int>
     {
-        public override void Update(Urun entity, bool isSaveLater = false)
-        {
-            var entry = _context.Entry(entity);
-            var eskiFiyat = (decimal)entry.OriginalValues["Fiyat"];
-            //urun fiyat gecmisi tablosuna eklenir/loglanir
-            base.Update(entity, isSaveLater);
-        }
+        //public override void Update(Urun entity, bool isSaveLater = false)
+        //{
+        //    var entry = _context.Entry(entity);
+        //    var eskiFiyat = (decimal)entry.OriginalValues["Fiyat"];
+        //    //urun fiyat gecmisi tablosuna eklenir/loglanir
+        //    base.Update(entity, isSaveLater);
+        //}
     }
 }
