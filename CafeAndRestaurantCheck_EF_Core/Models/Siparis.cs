@@ -15,18 +15,22 @@ namespace CafeAndRestaurantCheck_EF_Core.Models
         [Key]
         public int Id { get; set; }
         [Required,StringLength(50)]
-        public Urun Urun { get; set; }
         public int Adet { get; set; } = 1;
         [Required]// fluent api de hassasiyet ver
         public decimal BirimFiyat { get; set; }
+        public decimal AraToplam { get; set; }
 
         [Required, StringLength(50)]
         public string MasaAd { get; set; }
-
         [Required]
         public bool MasaDurum { get; set; } = false;
-        [Required]// fluent api de hassasiyet ver
-        //public decimal AraToplam { get => Adet * BirimFiyat; set; } 
-        public decimal AraToplam { get; set; }
+        [Required]
+        public int UrunId { get; set; }
+
+        [ForeignKey(nameof(UrunId))]
+        public Urun Urun { get; set; }
+
+        
+       
     }
 }

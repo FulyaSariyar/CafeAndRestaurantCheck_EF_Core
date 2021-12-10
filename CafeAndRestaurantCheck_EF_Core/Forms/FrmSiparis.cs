@@ -19,12 +19,15 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
     {
         private CafeContext _dbContext = new CafeContext();
         private KategoriRepo _kategoriRepo = new KategoriRepo();
+        private SiparisRepo _siparisRepo = new SiparisRepo();
         private UrunRepo _urunRepo = new UrunRepo();
-
-        public FrmSiparis()
+        Button _oMasa;
+        public FrmSiparis(Button oMasa)
         {
             InitializeComponent();
+            _oMasa = oMasa;
         }
+        
 
         // * Load kısmında sipariş form pictureboxlara çekme işlemi gerçekleştirildi.
 
@@ -183,5 +186,27 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             frmGiris.Show();
             this.Hide();
         }
+
+        private void btn_SiparisAl_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("button tık var");
+            foreach (var item in _sepet)
+            {
+                Siparis yeniSiparis = new Siparis()
+                {
+                    UrunId = item.UrunId,
+                    Adet = item.Adet,
+                    BirimFiyat = item.BirimFiyat,
+                    MasaAd = _oMasa.Name,
+                    AraToplam = item.AraToplam,
+                    MasaDurum = true
+
+                };
+                _siparisRepo.Add(yeniSiparis);
+
+            }
+
+        }
+
     }
 }
