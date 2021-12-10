@@ -21,6 +21,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         {
             InitializeComponent();
         }
+        Color seciliKatColor = Color.BlueViolet, defaultKatColor = Color.Chocolate;
         private void FrmPersonel_Load(object sender, EventArgs e)
         {
             var binabilgileri = _binaRepo.GetAll().ToList();
@@ -65,7 +66,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             var binabilgileri = _binaRepo.GetAll().ToList();
 
             //flpMenuElemanlari.Controls.Clear();
-            Button oButton = (Button)sender;
+            Button oButton = (Button)sender;//secili buton
             foreach (var item in binabilgileri)
             {
 
@@ -95,6 +96,12 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                     }
 
                 }
+            }
+            foreach (Button button in flwpBinaBolumleri.Controls)
+            {
+                button.BackColor = defaultKatColor;
+                if (button.Text == oButton.Text)
+                    button.BackColor = seciliKatColor;
             }
         }
         protected void btnMasa_Click(object sender, EventArgs e)

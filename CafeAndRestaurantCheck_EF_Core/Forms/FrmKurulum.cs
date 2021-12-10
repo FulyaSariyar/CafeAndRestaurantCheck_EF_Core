@@ -23,8 +23,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
         private void FrmKurulum_Load(object sender, EventArgs e)
         {
-            cmbKategori.DataSource = _kategoriRepo.GetAll().ToList();
-            cmbKategori.DisplayMember = "Ad";
+            UrunListele();   
         }
         public FrmKurulum()
         {
@@ -35,6 +34,13 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         {
             lstUrunler.DataSource = null;
             lstUrunler.DataSource = _urunRepo.GetAll().Where(x => x.IsDeleted == false).ToList();
+
+            cmbKategori.DataSource = _kategoriRepo.GetAll().Where(x => x.IsDeleted == false).ToList();
+            cmbKategori.DisplayMember = "Ad";
+            cmbKategori.ValueMember = "Id";
+
+            lstUrunler.DataSource = _dbContext.Urunler
+               .Include(x => x.Kategori).ToList();
         }
         private void btnKaydet_Click(object sender, EventArgs e)
         {
@@ -94,12 +100,15 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             }
 
         }
+        private Urun seciliUrun;
         private void lstUrunler_SelectedIndexChanged(object sender, EventArgs e)
         {
+
             if (lstUrunler.SelectedItem == null) return; //index çaıştığında null gelebilir. Hata verme.
 
+          
             // seciliUrun = lstUrunler.SelectedItem as Urun;
-            Urun seciliUrun = (Urun)lstUrunler.SelectedItem;
+            seciliUrun = (Urun)lstUrunler.SelectedItem;
             txtUrunAd.Text = seciliUrun.Ad;
             txtFiyat.Text = seciliUrun.BirimFiyat.ToString();
             cmbKategori.SelectedItem = seciliUrun.Kategori;
@@ -111,7 +120,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             }
         }
 
-        private Urun seciliUrun;
+        
         private Kategori seciliKategori;
         private void btnGuncelle_Click(object sender, EventArgs e)
         {
@@ -154,7 +163,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show("KAtegori boş geçilemez.");
+                MessageBox.Show("Kategori boş geçilemez.");
                 _dbContext = new CafeContext();
             }
             finally
@@ -271,7 +280,6 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                 ListeleKategori();
             }
             //var kategori = _kategoriRepo.GetById(seciliKategori.Id) as Kategori;
-
 
         }
 
