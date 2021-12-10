@@ -127,17 +127,14 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                             Urun = urun,
                             Adet = 1
                         });
-
                     }
                     else
                     {
                         sepetUrun.Adet++;
                     }
                 }
-
             }
             SepetiDoldur();
-
         }
 
         private void SepetiDoldur()
@@ -165,10 +162,8 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                 lstCart.Items.Add(viewItem);
             }
             lstCart.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-
         }
         
-       
         private void lstCart_Click(object sender, EventArgs e)
         {
             var secili = lstCart.SelectedItems[0].Tag as SepetViewModel;
@@ -181,14 +176,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                 secili.Adet--;
             }
             SepetiDoldur();
-
         }
-
-        private void tableLayoutPanelsepet_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void btnGeri_Click(object sender, EventArgs e)
         {
             FrmGiris frmGiris = new FrmGiris();
