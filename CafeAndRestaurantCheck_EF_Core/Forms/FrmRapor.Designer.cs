@@ -67,6 +67,7 @@
             btnGünlükRapor.TabIndex = 3;
             btnGünlükRapor.Text = "GÜNLÜK RAPOR";
             btnGünlükRapor.UseVisualStyleBackColor = false;
+            btnGünlükRapor.Click += new System.EventHandler(this.btnGünlükRapor_Click_1);
             // 
             // btnAylikRapor
             // 
@@ -79,8 +80,9 @@
             btnAylikRapor.Name = "btnAylikRapor";
             btnAylikRapor.Size = new System.Drawing.Size(358, 27);
             btnAylikRapor.TabIndex = 4;
-            btnAylikRapor.Text = "AYLİK RAPOR";
+            btnAylikRapor.Text = "AYLIK RAPOR";
             btnAylikRapor.UseVisualStyleBackColor = false;
+            btnAylikRapor.Click += new System.EventHandler(this.btnAylikRapor_Click);
             // 
             // btnRaporGeri
             // 
@@ -231,6 +233,7 @@
             this.Text = "FrmRapor";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FrmRapor_Load);
+           
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
