@@ -17,16 +17,16 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             InitializeComponent();
         }
 
-        private void btnRaporGeri_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnRaporGeri_Click_1(object sender, EventArgs e)
         {
             FrmGiris frmGiris = new FrmGiris();
             frmGiris.Show();
             this.Hide();
+        }
+
+        private void FrmRapor_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
