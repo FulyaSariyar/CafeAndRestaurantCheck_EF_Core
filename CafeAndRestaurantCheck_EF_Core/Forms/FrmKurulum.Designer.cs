@@ -209,6 +209,7 @@
             this.txtUrunAd.Name = "txtUrunAd";
             this.txtUrunAd.Size = new System.Drawing.Size(160, 23);
             this.txtUrunAd.TabIndex = 49;
+            this.txtUrunAd.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtUrunAd_KeyPress);
             // 
             // txtFiyat
             // 
@@ -218,6 +219,7 @@
             this.txtFiyat.Name = "txtFiyat";
             this.txtFiyat.Size = new System.Drawing.Size(160, 23);
             this.txtFiyat.TabIndex = 50;
+            this.txtFiyat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtFiyat_KeyPress);
             // 
             // pbUrun
             // 

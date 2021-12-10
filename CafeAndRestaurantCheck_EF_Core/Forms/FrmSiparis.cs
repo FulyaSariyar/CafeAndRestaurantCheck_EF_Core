@@ -184,9 +184,28 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
         }
 
-        private void tableLayoutPanelsepet_Paint(object sender, PaintEventArgs e)
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
+            Bitmap Adisyon = new Bitmap(this.tableLayoutPanelsepet.Width, this.tableLayoutPanelsepet.Height);
+            lstCart.DrawToBitmap(Adisyon, new System.Drawing.Rectangle(0, 0, this.tableLayoutPanelsepet.Width, this.tableLayoutPanelsepet.Height));
 
+            Bitmap lbl = new Bitmap(this.lblToplam.Width, this.lblToplam.Height);
+            lblToplam.DrawToBitmap(lbl, new System.Drawing.Rectangle(0, 0, this.lblToplam.Width, this.lblToplam.Height));
+
+            e.Graphics.DrawImage(Adisyon, 135, 65);
+            e.Graphics.DrawImage(lbl, this.lstCart.Width, this.tableLayoutPanelsepet.Height - 300);
+        }
+
+        private void btnAdisyonKapat_Click(object sender, EventArgs e)
+        {
+            PrintDialog daraGridViewPrintDialog = new PrintDialog();
+            daraGridViewPrintDialog.Document = printDocument1;
+            daraGridViewPrintDialog.UseEXDialog = true;
+            printDocument1.Print();
+            this.Close();
+
+           // _btn.BackColor = ColorTranslator.FromHtml("#ee7621");
+            this.Hide();
         }
     }
 }
