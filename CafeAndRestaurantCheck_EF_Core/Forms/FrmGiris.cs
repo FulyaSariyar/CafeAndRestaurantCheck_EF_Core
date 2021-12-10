@@ -17,6 +17,26 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             InitializeComponent();
         }
 
-       
+
+        private void btnYonetici_Click(object sender, EventArgs e)
+        {
+            FrmKurulum frmKurulum = new FrmKurulum();
+            frmKurulum.Show();
+            this.Hide();
+        }
+
+
+        private void btnKapat_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            Application.Exit();
+        }
+
+        private void btnPersonel_Click(object sender, EventArgs e)
+        {
+            FrmSiparis frmSiparis = new FrmSiparis();
+            frmSiparis.Show();
+            this.Hide();
+        }
     }
 }

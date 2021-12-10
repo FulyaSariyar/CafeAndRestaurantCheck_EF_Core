@@ -68,5 +68,12 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             //    }
             //}
         }
+
+        private void btnGeri_Click(object sender, EventArgs e)
+        {
+            FrmGiris frmGiris = new FrmGiris();
+            frmGiris.Show();
+            this.Hide();
+        }
     }
 }

@@ -44,36 +44,41 @@
             this.tableLayoutPanel1.Controls.Add(this.flwpMasa, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1611, 746);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1199, 560);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // flwpBinaBolumleri
             // 
             this.flwpBinaBolumleri.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flwpBinaBolumleri.Location = new System.Drawing.Point(3, 3);
+            this.flwpBinaBolumleri.Location = new System.Drawing.Point(3, 2);
+            this.flwpBinaBolumleri.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.flwpBinaBolumleri.Name = "flwpBinaBolumleri";
-            this.flwpBinaBolumleri.Size = new System.Drawing.Size(316, 740);
+            this.flwpBinaBolumleri.Size = new System.Drawing.Size(233, 556);
             this.flwpBinaBolumleri.TabIndex = 0;
             // 
             // flwpMasa
             // 
             this.flwpMasa.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flwpMasa.Location = new System.Drawing.Point(325, 3);
+            this.flwpMasa.Location = new System.Drawing.Point(242, 2);
+            this.flwpMasa.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.flwpMasa.Name = "flwpMasa";
-            this.flwpMasa.Size = new System.Drawing.Size(1283, 740);
+            this.flwpMasa.Size = new System.Drawing.Size(954, 556);
             this.flwpMasa.TabIndex = 1;
             // 
             // FrmPersonel
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1611, 746);
+            this.ClientSize = new System.Drawing.Size(1199, 560);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "FrmPersonel";
             this.Text = "FrmPersonel";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FrmPersonel_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
