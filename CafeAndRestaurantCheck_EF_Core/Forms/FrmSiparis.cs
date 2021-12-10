@@ -27,12 +27,13 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             InitializeComponent();
             _oMasa = oMasa;
         }
-        
+
 
         // * Load kısmında sipariş form pictureboxlara çekme işlemi gerçekleştirildi.
 
         private void FrmSiparis_Load(object sender, EventArgs e)
         {
+
             var kategoriler = _kategoriRepo.GetAll().ToList();
 
             for (int i = 0; i < kategoriler.Count(); i++)
@@ -63,6 +64,18 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                 };
                 lblDetay.Parent = pbox;
             }
+
+            _sepet = _dbContext.Siparisler
+                .Include(s => s.Urun)
+                .Where(s => s.MasaAd == _oMasa.Name && s.MasaDurum == true)
+                .Select(s => new SepetViewModel
+                { 
+                    Urun = s.Urun,
+                    Adet = s.Adet,
+                })
+               .ToList();
+            SepetiDoldur();
+            Console.WriteLine();
         }
 
         //* Tıklanan menüye göre ürüler getirildi.
@@ -155,18 +168,18 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             lstCart.Columns.Add("Ürün");
             lstCart.Columns.Add("Ara Toplam");
 
-       
+
             foreach (var item in _sepet)
-            {         
+            {
                 ListViewItem viewItem = new ListViewItem(item.Adet.ToString());
                 viewItem.Tag = item;
                 viewItem.SubItems.Add(item.Urun.Ad);
-                viewItem.SubItems.Add($"{item.AraToplam:c2}");              
+                viewItem.SubItems.Add($"{item.AraToplam:c2}");
                 lstCart.Items.Add(viewItem);
             }
             lstCart.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
-        
+
         private void lstCart_Click(object sender, EventArgs e)
         {
             var secili = lstCart.SelectedItems[0].Tag as SepetViewModel;

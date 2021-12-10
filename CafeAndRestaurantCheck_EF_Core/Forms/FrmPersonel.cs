@@ -17,6 +17,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
     {
         private BinaRepo _binaRepo = new BinaRepo();
         private CafeContext _cafeContext = new CafeContext();
+        private SiparisRepo _siparisRepo= new SiparisRepo();
         public FrmPersonel()
         {
             InitializeComponent();
@@ -59,6 +60,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
 
             }
+          
 
         }
         protected void btnKat_Click(object sender, EventArgs e)
@@ -96,6 +98,8 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                     }
 
                 }
+                
+               
             }
             foreach (Button button in flwpBinaBolumleri.Controls)
             {
@@ -103,13 +107,30 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                 if (button.Text == oButton.Text)
                     button.BackColor = seciliKatColor;
             }
+            MasaRenklendir();
         }
+        private void MasaRenklendir()
+        {
+            var mevcutSiparisler = _siparisRepo.GetAll(x => x.MasaDurum == true);
+            foreach (Button button in flwpMasa.Controls)
+            {
+                button.BackColor = defaultKatColor;
+                if (mevcutSiparisler.Any(x => x.MasaAd.Equals(button.Name)))
+                {
+                    button.BackColor = seciliKatColor;
+                }
+            }
+        }
+
+
         protected void btnMasa_Click(object sender, EventArgs e)
         {
             Button oMasa = (Button)sender;
             FrmSiparis _frmSiparis = new FrmSiparis(oMasa);
             _frmSiparis.Show();
             this.Hide();
+
+           
         }
     }
 }
