@@ -32,19 +32,19 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
           
         }
 
-        private void btnGünlükRapor_Click(object sender, EventArgs e)
-        {
-            var siparis = new Siparis();
-            _siparisRepo.Gunluk(siparis);
-            dgViewGunluk.DataSource = _siparisRepo.GetAll();
-       
-        }
 
         private void btnAylikRapor_Click(object sender, EventArgs e)
         {
             var siparis = new Siparis();
             _siparisRepo.Aylik(siparis);
-            dgViewAylik.DataSource = _siparisRepo.GetAll();
+            dgViewAylik.DataSource = _siparisRepo.GetAll().ToList();
+        }
+
+        private void btnGünlükRapor_Click_1(object sender, EventArgs e)
+        {
+            var siparis = new Siparis();
+            _siparisRepo.Gunluk(siparis);
+            dgViewGunluk.DataSource = _siparisRepo.GetAll().ToList();
         }
     }
 }
