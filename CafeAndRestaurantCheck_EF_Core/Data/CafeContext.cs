@@ -15,7 +15,6 @@ namespace CafeAndRestaurantCheck_EF_Core.Data
         public CafeContext()
            : base()
         {
-
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -25,9 +24,6 @@ namespace CafeAndRestaurantCheck_EF_Core.Data
             }
             //DbContext.Entry<Urun>(urun).State = Microsoft.EntityFrameworkCore.EntityState.Modified
         }
-
-
-
 
         public DbSet<BinaBilgi> BinaBilgileri { get; set; }
         

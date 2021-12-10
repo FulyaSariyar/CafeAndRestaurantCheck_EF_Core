@@ -34,8 +34,8 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
         private void btnPersonel_Click(object sender, EventArgs e)
         {
-            FrmSiparis frmSiparis = new FrmSiparis();
-            frmSiparis.Show();
+            FrmPersonel frmPersonel = new FrmPersonel();
+            frmPersonel.Show();
             this.Hide();
         }
     }

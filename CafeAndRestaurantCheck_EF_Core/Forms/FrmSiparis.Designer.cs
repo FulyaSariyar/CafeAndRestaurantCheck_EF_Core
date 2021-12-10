@@ -124,7 +124,6 @@
             this.tableLayoutPanelsepet.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanelsepet.Size = new System.Drawing.Size(279, 463);
             this.tableLayoutPanelsepet.TabIndex = 1;
-            this.tableLayoutPanelsepet.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanelsepet_Paint);
             // 
             // tableLayoutPanel1
             // 

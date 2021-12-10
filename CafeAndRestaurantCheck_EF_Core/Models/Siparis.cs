@@ -22,6 +22,9 @@ namespace CafeAndRestaurantCheck_EF_Core.Models
 
         [Required, StringLength(50)]
         public string MasaAd { get; set; }
+
+        [Required]
+        public bool MasaDurum { get; set; } = false;
         [Required]// fluent api de hassasiyet ver
         //public decimal AraToplam { get => Adet * BirimFiyat; set; } 
         public decimal AraToplam { get; set; }
