@@ -528,6 +528,7 @@
             this.txtKategoriAd.Name = "txtKategoriAd";
             this.txtKategoriAd.Size = new System.Drawing.Size(266, 27);
             this.txtKategoriAd.TabIndex = 3;
+            this.txtKategoriAd.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtKategoriAd_KeyPress);
             // 
             // txtAciklama
             // 
