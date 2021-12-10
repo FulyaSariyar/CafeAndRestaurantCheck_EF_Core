@@ -25,9 +25,9 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         {
             InitializeComponent();
         }
-        
-         // * Load kısmında sipariş form pictureboxlara çekme işlemi gerçekleştirildi.
-       
+
+        // * Load kısmında sipariş form pictureboxlara çekme işlemi gerçekleştirildi.
+
         private void FrmSiparis_Load(object sender, EventArgs e)
         {
             var kategoriler = _kategoriRepo.GetAll().ToList();
@@ -142,9 +142,8 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
         private void SepetiDoldur()
         {
-
-            //var toplamFiyat = _sepet.Sum(x => x.AraToplam);
-            //lblToplam.Text = $"Toplam:{toplamFiyat:c2}";
+            var toplamFiyat = _sepet.Sum(x => x.AraToplam);
+            lblToplam.Text = $"Toplam:{toplamFiyat:c2}";
 
             lstCart.Columns.Clear();
             lstCart.Items.Clear();
@@ -155,51 +154,24 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             lstCart.Columns.Add("Adet");
             lstCart.Columns.Add("Ürün");
             lstCart.Columns.Add("Ara Toplam");
-            lstCart.Columns.Add("Azalt");
 
-            var btnAzalt1 = new Button
-
-            {
-                Size = new Size(150, 150),
-                //BackColor = ColorTranslator.FromHtml("#7F7F7F"),//#a45117//CD661D
-                BackColor = Color.IndianRed,
-                Text = $"Azalt",
-                ForeColor = Color.White
-            };
-            
-            ListViewExtender extender = new ListViewExtender(lstCart);
-
-            ListViewButtonColumn btnAzalt = new ListViewButtonColumn(3);
-            btnAzalt.Click += btnAzalt_Click;
-            btnAzalt.FixedWidth = true;
-            extender.AddColumn(btnAzalt);
-
-
-            //btnAzalt.Click += new EventHandler(btnAzalt_Click);
-
-            //ListViewItem item = listView1.Items.Add("item" + i);
+       
             foreach (var item in _sepet)
-            {
-               
-                //ListViewItem viewItem1 = lstCart.Items.Add("Azalt");
+            {         
                 ListViewItem viewItem = new ListViewItem(item.Adet.ToString());
                 viewItem.Tag = item;
                 viewItem.SubItems.Add(item.Urun.Ad);
-                viewItem.SubItems.Add($"{item.AraToplam:c2}");
-                //viewItem.SubItems.Add("Azalt1");
-                //viewItem.SubItems.Add(lstCart.Items.Add("Azalt"));
-                viewItem.SubItems.Add("Azalt");
-                // viewItem.SubItems.Add();
+                viewItem.SubItems.Add($"{item.AraToplam:c2}");              
                 lstCart.Items.Add(viewItem);
-                //lstCart.Controls.Add(btnAzalt);
             }
             lstCart.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
 
         }
-        private void btnAzalt_Click(object sender, ListViewColumnMouseEventArgs e)
+        
+       
+        private void lstCart_Click(object sender, EventArgs e)
         {
             var secili = lstCart.SelectedItems[0].Tag as SepetViewModel;
-
             if (secili.Adet == 1)
             {
                 _sepet.Remove(secili);
@@ -209,10 +181,12 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                 secili.Adet--;
             }
             SepetiDoldur();
-           // this.Close();
-            //MessageBox.Show("fşdlkgdfgldfg");
+
         }
 
+        private void tableLayoutPanelsepet_Paint(object sender, PaintEventArgs e)
+        {
 
+        }
     }
 }

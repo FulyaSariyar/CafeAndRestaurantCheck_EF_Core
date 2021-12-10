@@ -11,7 +11,7 @@ namespace CafeAndRestaurantCheck_EF_Core
         static void Main()
         {
             ApplicationConfiguration.Initialize();
-            Application.Run(new FrmKurulum());
+            Application.Run(new FrmPersonel());
         }
     }
 }
