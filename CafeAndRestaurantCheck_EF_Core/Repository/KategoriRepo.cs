@@ -10,6 +10,6 @@ namespace CafeAndRestaurantCheck_EF_Core.Repository
 {
     public  class KategoriRepo: RepositoryBase<Kategori, int>
     {
-
+        
     }
 }

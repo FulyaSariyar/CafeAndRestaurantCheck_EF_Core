@@ -19,17 +19,21 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
     {
         private CafeContext _dbContext = new CafeContext();
         private KategoriRepo _kategoriRepo = new KategoriRepo();
+        private SiparisRepo _siparisRepo = new SiparisRepo();
         private UrunRepo _urunRepo = new UrunRepo();
-
-        public FrmSiparis()
+        Button _oMasa;
+        public FrmSiparis(Button oMasa)
         {
             InitializeComponent();
+            _oMasa = oMasa;
         }
+
 
         // * Load kısmında sipariş form pictureboxlara çekme işlemi gerçekleştirildi.
 
         private void FrmSiparis_Load(object sender, EventArgs e)
         {
+
             var kategoriler = _kategoriRepo.GetAll().ToList();
 
             for (int i = 0; i < kategoriler.Count(); i++)
@@ -60,6 +64,18 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                 };
                 lblDetay.Parent = pbox;
             }
+
+            _sepet = _dbContext.Siparisler
+                .Include(s => s.Urun)
+                .Where(s => s.MasaAd == _oMasa.Name && s.MasaDurum == true)
+                .Select(s => new SepetViewModel
+                { 
+                    Urun = s.Urun,
+                    Adet = s.Adet,
+                })
+               .ToList();
+            SepetiDoldur();
+            Console.WriteLine();
         }
 
         //* Tıklanan menüye göre ürüler getirildi.
@@ -127,17 +143,14 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                             Urun = urun,
                             Adet = 1
                         });
-
                     }
                     else
                     {
                         sepetUrun.Adet++;
                     }
                 }
-
             }
             SepetiDoldur();
-
         }
 
         private void SepetiDoldur()
@@ -155,20 +168,18 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             lstCart.Columns.Add("Ürün");
             lstCart.Columns.Add("Ara Toplam");
 
-       
+
             foreach (var item in _sepet)
-            {         
+            {
                 ListViewItem viewItem = new ListViewItem(item.Adet.ToString());
                 viewItem.Tag = item;
                 viewItem.SubItems.Add(item.Urun.Ad);
-                viewItem.SubItems.Add($"{item.AraToplam:c2}");              
+                viewItem.SubItems.Add($"{item.AraToplam:c2}");
                 lstCart.Items.Add(viewItem);
             }
             lstCart.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-
         }
-        
-       
+
         private void lstCart_Click(object sender, EventArgs e)
         {
             var secili = lstCart.SelectedItems[0].Tag as SepetViewModel;
@@ -181,9 +192,32 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                 secili.Adet--;
             }
             SepetiDoldur();
-
+        }
+        private void btnGeri_Click(object sender, EventArgs e)
+        {
+            FrmGiris frmGiris = new FrmGiris();
+            frmGiris.Show();
+            this.Hide();
         }
 
+        private void btn_SiparisAl_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("button tık var");
+            foreach (var item in _sepet)
+            {
+                Siparis yeniSiparis = new Siparis()
+                {
+                    UrunId = item.UrunId,
+                    Adet = item.Adet,
+                    BirimFiyat = item.BirimFiyat,
+                    MasaAd = _oMasa.Name,
+                    AraToplam = item.AraToplam,
+                    MasaDurum = true
+
+                };
+                _siparisRepo.Add(yeniSiparis);
+
+            }
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
             Bitmap Adisyon = new Bitmap(this.tableLayoutPanelsepet.Width, this.tableLayoutPanelsepet.Height);
@@ -207,5 +241,6 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
            // _btn.BackColor = ColorTranslator.FromHtml("#ee7621");
             this.Hide();
         }
+
     }
 }

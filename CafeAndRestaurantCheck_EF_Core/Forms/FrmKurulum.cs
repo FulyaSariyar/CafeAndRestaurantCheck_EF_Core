@@ -322,7 +322,20 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                 e.Handled = true;
             }
         }
-              
+
+        private void btnRaporlar_Click(object sender, EventArgs e)
+        {
+            FrmRapor frmRapor = new FrmRapor();
+            frmRapor.Show();
+            this.Hide();
+        }
+
+        private void btnKur_Click(object sender, EventArgs e)
+        {
+           FrmPersonel frmPersonel = new FrmPersonel();
+            frmPersonel.Show();
+            this.Hide();
+        }
     }
 }
 
