@@ -87,6 +87,7 @@
             this.button4.TabIndex = 40;
             this.button4.Text = "GERİ";
             this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // tableLayoutPanel2
             // 
@@ -332,7 +333,7 @@
             this.btnGuncelle.TabIndex = 38;
             this.btnGuncelle.Text = "GÜNCELLE";
             this.btnGuncelle.UseVisualStyleBackColor = false;
-            
+            this.btnGuncelle.Click += new System.EventHandler(this.btnGuncelle_Click);
             // 
             // FrmBinaBilgileri
             // 

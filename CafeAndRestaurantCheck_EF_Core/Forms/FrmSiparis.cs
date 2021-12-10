@@ -1,5 +1,8 @@
 ﻿using CafeAndRestaurantCheck_EF_Core.Data;
+using CafeAndRestaurantCheck_EF_Core.Models;
 using CafeAndRestaurantCheck_EF_Core.Repository;
+using CafeAndRestaurantCheck_EF_Core.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,10 +17,202 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 {
     public partial class FrmSiparis : Form
     {
-       
+        private CafeContext _dbContext = new CafeContext();
+        private KategoriRepo _kategoriRepo = new KategoriRepo();
+        private UrunRepo _urunRepo = new UrunRepo();
+
         public FrmSiparis()
         {
             InitializeComponent();
         }
+        
+         // * Load kısmında sipariş form pictureboxlara çekme işlemi gerçekleştirildi.
+       
+        private void FrmSiparis_Load(object sender, EventArgs e)
+        {
+            var kategoriler = _kategoriRepo.GetAll().ToList();
+
+            for (int i = 0; i < kategoriler.Count(); i++)
+            {
+                var groupBox = new GroupBox();
+                groupBox.Name = $"grpBox{kategoriler[i].Ad}";
+                MemoryStream stream = new MemoryStream(kategoriler[i].Fotograf);
+                var pbox = new PictureBox
+                {
+                    SizeMode = PictureBoxSizeMode.StretchImage,
+                    Size = new Size(320, 210),
+                    Image = Image.FromStream(stream)
+                };
+                pbox.Name = $"{kategoriler[i].Ad}";
+                pbox.Click += new EventHandler(pbox_Click);
+                pbox.Parent = groupBox;
+                flwpMenu.Controls.Add(pbox);
+
+                //Label içerisinde menü isimleri yazdırıldı
+                Label lblDetay = new Label
+                {
+                    Text = $"{kategoriler[i].Ad}",
+                    ForeColor = Color.Chocolate,
+                    Font = new Font("Arial", 10, FontStyle.Bold),
+                    BackColor = Color.White,
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Location = new Point(7, 7)
+                };
+                lblDetay.Parent = pbox;
+            }
+        }
+
+        //* Tıklanan menüye göre ürüler getirildi.
+        private void pbox_Click(object sender, EventArgs e)
+        {
+            var query = _dbContext.Kategoriler
+                .Include(x => x.Urunler).ToList();
+            flwpUrunller.Controls.Clear();
+            PictureBox oPictureBox = (PictureBox)sender;
+            foreach (var item in query)
+            {
+                if (oPictureBox.Name == item.Ad)
+                {
+                    foreach (var eleman in item.Urunler)
+                    {
+                        MemoryStream stream = new MemoryStream(eleman.Fotograf);
+                        var groupBox = new GroupBox();
+                        groupBox.Name = $"grpBox{eleman.Ad}";
+
+                        //Sol taraf menü listesi click olaylaarı
+                        var pbox = new PictureBox
+                        {
+                            SizeMode = PictureBoxSizeMode.StretchImage,
+                            Size = new Size(210, 160),
+                            Image = Image.FromStream(stream)
+                        };
+
+                        pbox.Name = $"{eleman.Ad}";
+                        pbox.Click += new EventHandler(pboxUrunler_Click);
+                        pbox.Parent = groupBox;
+                        flwpUrunller.Controls.Add(pbox);
+
+                        // Label içerisinde ürün bilgileri yazdırıldı
+                        Label lblDetay = new Label
+                        {
+                            Text = $"{eleman.Ad} {eleman.BirimFiyat} TL",
+                            ForeColor = Color.White,
+                            Font = new Font("Arial", 10, FontStyle.Bold),
+                            BackColor = Color.Chocolate,
+                            TextAlign = ContentAlignment.MiddleCenter,
+                            Location = new Point(13, 110),
+                            AutoSize = true
+                        };
+                        lblDetay.Parent = pbox;
+                    }
+                }
+            }
+        }
+        public List<SepetViewModel> _sepet = new List<SepetViewModel>();
+        private void pboxUrunler_Click(object sender, EventArgs e)
+        {
+            //if (lstProducts.SelectedItem == null) return;
+            PictureBox oPictureBox = (PictureBox)sender;
+            var urunler = _urunRepo.GetAll().ToList();
+            foreach (var item in urunler)
+            {
+                if (oPictureBox.Name == item.Ad)
+                {
+                    var urun = item as Urun;
+                    var sepetUrun = _sepet.FirstOrDefault(x => x.Urun.Id == urun.Id);
+                    if (sepetUrun == null)
+                    {
+                        _sepet.Add(new SepetViewModel
+                        {
+                            Urun = urun,
+                            Adet = 1
+                        });
+
+                    }
+                    else
+                    {
+                        sepetUrun.Adet++;
+                    }
+                }
+
+            }
+            SepetiDoldur();
+
+        }
+
+        private void SepetiDoldur()
+        {
+
+            //var toplamFiyat = _sepet.Sum(x => x.AraToplam);
+            //lblToplam.Text = $"Toplam:{toplamFiyat:c2}";
+
+            lstCart.Columns.Clear();
+            lstCart.Items.Clear();
+            lstCart.MultiSelect = false;
+            lstCart.FullRowSelect = true;
+            lstCart.View = View.Details;
+
+            lstCart.Columns.Add("Adet");
+            lstCart.Columns.Add("Ürün");
+            lstCart.Columns.Add("Ara Toplam");
+            lstCart.Columns.Add("Azalt");
+
+            var btnAzalt1 = new Button
+
+            {
+                Size = new Size(150, 150),
+                //BackColor = ColorTranslator.FromHtml("#7F7F7F"),//#a45117//CD661D
+                BackColor = Color.IndianRed,
+                Text = $"Azalt",
+                ForeColor = Color.White
+            };
+            
+            ListViewExtender extender = new ListViewExtender(lstCart);
+
+            ListViewButtonColumn btnAzalt = new ListViewButtonColumn(3);
+            btnAzalt.Click += btnAzalt_Click;
+            btnAzalt.FixedWidth = true;
+            extender.AddColumn(btnAzalt);
+
+
+            //btnAzalt.Click += new EventHandler(btnAzalt_Click);
+
+            //ListViewItem item = listView1.Items.Add("item" + i);
+            foreach (var item in _sepet)
+            {
+               
+                //ListViewItem viewItem1 = lstCart.Items.Add("Azalt");
+                ListViewItem viewItem = new ListViewItem(item.Adet.ToString());
+                viewItem.Tag = item;
+                viewItem.SubItems.Add(item.Urun.Ad);
+                viewItem.SubItems.Add($"{item.AraToplam:c2}");
+                //viewItem.SubItems.Add("Azalt1");
+                //viewItem.SubItems.Add(lstCart.Items.Add("Azalt"));
+                viewItem.SubItems.Add("Azalt");
+                // viewItem.SubItems.Add();
+                lstCart.Items.Add(viewItem);
+                //lstCart.Controls.Add(btnAzalt);
+            }
+            lstCart.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+
+        }
+        private void btnAzalt_Click(object sender, ListViewColumnMouseEventArgs e)
+        {
+            var secili = lstCart.SelectedItems[0].Tag as SepetViewModel;
+
+            if (secili.Adet == 1)
+            {
+                _sepet.Remove(secili);
+            }
+            else
+            {
+                secili.Adet--;
+            }
+            SepetiDoldur();
+           // this.Close();
+            //MessageBox.Show("fşdlkgdfgldfg");
+        }
+
+
     }
 }

@@ -21,7 +21,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer( @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = CafeDb1; Integrated Security = True;");
+                optionsBuilder.UseSqlServer( @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = CafeDb; Integrated Security = True;");
             }
             //DbContext.Entry<Urun>(urun).State = Microsoft.EntityFrameworkCore.EntityState.Modified
         }
@@ -30,13 +30,43 @@ namespace CafeAndRestaurantCheck_EF_Core.Data
 
 
         public DbSet<BinaBilgi> BinaBilgileri { get; set; }
+        
         public DbSet<Urun> Urunler { get; set; }
         public DbSet<Siparis> Siparisler { get; set; }
         public DbSet<Kategori> Kategoriler { get; set; }
 
-        
+
+        public override int SaveChanges()
+        {
+            var entries = ChangeTracker.Entries()
+                .Where(x => x.Entity is BaseEntity && x.State == EntityState.Added);
+
+            foreach (var item in entries)
+            {
+                ((BaseEntity)item.Entity as BaseEntity).CreatedDate = DateTime.Now;
+            }
+
+            entries = ChangeTracker.Entries()
+                .Where(x => x.Entity is BaseEntity && x.State == EntityState.Modified);
+            foreach (var item in entries)
+            {
+                ((BaseEntity)item.Entity as BaseEntity).UpdatedDate = DateTime.Now;
+            }
+
+            entries = ChangeTracker.Entries()
+               .Where(x => x.Entity is BaseEntity && x.State == EntityState.Deleted);
+            foreach (var item in entries)
+            {
+                ((BaseEntity)item.Entity as BaseEntity).DeletedDate = DateTime.Now;
+                ((BaseEntity)item.Entity).IsDeleted = true;
+                item.State = EntityState.Modified;
+            }
+
+            return base.SaveChanges();
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             modelBuilder.Entity<Urun>()
                 .Property(x => x.BirimFiyat)
                 .HasPrecision(10, 2);//hassasiyet
@@ -53,37 +83,6 @@ namespace CafeAndRestaurantCheck_EF_Core.Data
 
         }
 
-         public override int SaveChanges()
-        {
-            var entries = ChangeTracker.Entries() //neyin nasıl değiştriğini tutar
-                  .Where(x => x.Entity is BaseEntity && x.State == EntityState.Added);
-
-            foreach (var item in entries)
-            {
-                ((BaseEntity)item.Entity).CreatedDate = DateTime.Now;
-            }
-
-
-            entries = ChangeTracker.Entries() 
-                  .Where(x => x.Entity is BaseEntity && x.State == EntityState.Modified);
-
-            foreach (var item in entries)
-            {
-                ((BaseEntity)item.Entity).UpdatedDate = DateTime.Now;
-            }
-
-
-            entries = ChangeTracker.Entries()
-                  .Where(x => x.Entity is BaseEntity && x.State == EntityState.Deleted);
-
-            foreach (var item in entries)
-            {
-                ((BaseEntity)item.Entity).DeletedDate = DateTime.Now;
-                ((BaseEntity)item.Entity).IsDeleted= true;
-                item.State= EntityState.Modified;
-            }
-            return base.SaveChanges();
-          
-        }
+         
     }
 }
