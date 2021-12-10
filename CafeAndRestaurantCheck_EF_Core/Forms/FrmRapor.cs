@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CafeAndRestaurantCheck_EF_Core.Models;
+using CafeAndRestaurantCheck_EF_Core.Repository;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,6 +14,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 {
     public partial class FrmRapor : Form
     {
+        private SiparisRepo _siparisRepo = new SiparisRepo();
         public FrmRapor()
         {
             InitializeComponent();
@@ -26,7 +29,22 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
         private void FrmRapor_Load(object sender, EventArgs e)
         {
+          
+        }
 
+        private void btnGünlükRapor_Click(object sender, EventArgs e)
+        {
+            var siparis = new Siparis();
+            _siparisRepo.Gunluk(siparis);
+            dgViewGunluk.DataSource = _siparisRepo.GetAll();
+       
+        }
+
+        private void btnAylikRapor_Click(object sender, EventArgs e)
+        {
+            var siparis = new Siparis();
+            _siparisRepo.Aylik(siparis);
+            dgViewAylik.DataSource = _siparisRepo.GetAll();
         }
     }
 }

@@ -79,8 +79,9 @@
             btnAylikRapor.Name = "btnAylikRapor";
             btnAylikRapor.Size = new System.Drawing.Size(358, 27);
             btnAylikRapor.TabIndex = 4;
-            btnAylikRapor.Text = "AYLİK RAPOR";
+            btnAylikRapor.Text = "AYLIK RAPOR";
             btnAylikRapor.UseVisualStyleBackColor = false;
+            btnAylikRapor.Click += new System.EventHandler(this.btnAylikRapor_Click);
             // 
             // btnRaporGeri
             // 
