@@ -106,8 +106,8 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         }
         protected void btnMasa_Click(object sender, EventArgs e)
         {
-            Button oButton = (Button)sender;
-            FrmSiparis _frmSiparis = new FrmSiparis();
+            Button oMasa = (Button)sender;
+            FrmSiparis _frmSiparis = new FrmSiparis(oMasa);
             _frmSiparis.Show();
             this.Hide();
         }
