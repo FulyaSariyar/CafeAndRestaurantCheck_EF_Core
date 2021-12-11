@@ -23,7 +23,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Repository
                          select new RaporViewModel
                          {
                              Ad = urun.Ad,
-                            // CreatedDate = siparis.CreatedDate,
+                             CreatedDate = siparis.CreatedDate,
                              BirimFiyat = siparis.BirimFiyat,
                              Adet = siparis.Adet,
                              AraToplam = siparis.AraToplam
@@ -40,6 +40,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Repository
                          {
 
                              Ad = urun.Ad,
+                             CreatedDate = siparis.CreatedDate,
                              BirimFiyat = siparis.BirimFiyat,
                              Adet = siparis.Adet,
                              AraToplam = siparis.AraToplam
