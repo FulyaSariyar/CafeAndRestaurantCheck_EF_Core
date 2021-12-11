@@ -1,5 +1,6 @@
 ﻿using CafeAndRestaurantCheck_EF_Core.Models;
 using CafeAndRestaurantCheck_EF_Core.Repository;
+using CafeAndRestaurantCheck_EF_Core.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -42,9 +43,12 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
         private void btnGünlükRapor_Click_1(object sender, EventArgs e)
         {
+
             var siparis = new Siparis();
-            _siparisRepo.Gunluk(siparis);
-            dgViewGunluk.DataSource = _siparisRepo.GetAll().ToList();
+            //_siparisRepo.Gunluk(siparis);
+            dgViewGunluk.DataSource = _siparisRepo.Gunluk();
+            
+
         }
     }
 }

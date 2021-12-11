@@ -285,7 +285,8 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
         private void btnKategoriListele_Click(object sender, EventArgs e)
         {
-            dgViewKategori.DataSource = _kategoriRepo.GetAll().ToList();
+            var siparis = new Siparis();
+            dgViewKategori.DataSource = _kategoriRepo.KategoriListele();
         }
 
         private void btnBinaKurulum_Click(object sender, EventArgs e)

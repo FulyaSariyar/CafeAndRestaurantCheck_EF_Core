@@ -1,6 +1,7 @@
 ﻿using CafeAndRestaurantCheck_EF_Core.Data;
 using CafeAndRestaurantCheck_EF_Core.Models;
 using CafeAndRestaurantCheck_EF_Core.Repository.Abstracts;
+using CafeAndRestaurantCheck_EF_Core.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,28 +15,28 @@ namespace CafeAndRestaurantCheck_EF_Core.Repository
     {
         // private  CafeContext _context = new CafeContext();
 
-        public virtual void Gunluk(Siparis entity)
+        public virtual List<RaporViewModel> Gunluk()
         {
             var query1 = from siparis in _context.Siparisler
                          join urun in _context.Urunler on siparis.Id equals urun.Id
-                         where siparis.CreatedDate == DateTime.Today
-                         select new
+                         where siparis.CreatedDate.HasValue && siparis.CreatedDate.Value.Date == DateTime.Now.Date
+                         select new RaporViewModel
                          {
-
-                             urun.Ad,
-                             siparis.CreatedDate,
-                             siparis.BirimFiyat,
-                             siparis.Adet,
-                             siparis.AraToplam
+                             Ad = urun.Ad,
+                             CreatedDate = siparis.CreatedDate,
+                             BirimFiyat = siparis.BirimFiyat,
+                             Adet = siparis.Adet,
+                             AraToplam = siparis.AraToplam
                          };
+            return query1.ToList();
         }
         public virtual void Aylik(Siparis entity)
         {
 
             var query2 = from siparis in _context.Siparisler
                          join urun in _context.Urunler on siparis.Id equals urun.Id
-                         where siparis.CreatedDate >= Convert.ToDateTime(DateTime.Now.AddMonths(-1).ToShortDateString()) && siparis.CreatedDate <= Convert.ToDateTime(DateTime.Now.ToShortDateString())
-                         select new
+                        where siparis.CreatedDate >= Convert.ToDateTime(DateTime.Now.AddMonths(-1).ToShortDateString()) && siparis.CreatedDate <= Convert.ToDateTime(DateTime.Now.ToShortDateString())
+                         select new  
                          {
 
                              urun.Ad,
@@ -43,6 +44,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Repository
                              siparis.BirimFiyat,
                              siparis.Adet,
                              siparis.AraToplam
+
                          };
         }
         }
