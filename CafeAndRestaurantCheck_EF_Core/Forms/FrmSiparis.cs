@@ -64,16 +64,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                 };
                 lblDetay.Parent = pbox;
             }
-
-            _sepet = _dbContext.Siparisler
-                .Include(s => s.Urun)
-                .Where(s => s.MasaAd == _oMasa.Name && s.MasaDurum == true)
-                .Select(s => new SepetViewModel
-                { 
-                    Urun = s.Urun,
-                    Adet = s.Adet,
-                })
-               .ToList();
+            _sepet = _siparisRepo.MasaSiparisleriSepet(_oMasa);
             SepetiDoldur();
             Console.WriteLine();
         }
@@ -195,8 +186,8 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         }
         private void btnGeri_Click(object sender, EventArgs e)
         {
-            FrmGiris frmGiris = new FrmGiris();
-            frmGiris.Show();
+            FrmPersonel _frmPersonel = new FrmPersonel();
+            _frmPersonel.Show();
             this.Hide();
         }
 
@@ -218,6 +209,8 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                 _siparisRepo.Add(yeniSiparis);
 
             }
+
+        }
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
             Bitmap Adisyon = new Bitmap(this.tableLayoutPanelsepet.Width, this.tableLayoutPanelsepet.Height);
@@ -232,15 +225,22 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
         private void btnAdisyonKapat_Click(object sender, EventArgs e)
         {
+            if (_sepet.Count == 0)
+                MessageBox.Show("Sipariş alınmadan işlem yapılamamaktadır.");
             PrintDialog daraGridViewPrintDialog = new PrintDialog();
             daraGridViewPrintDialog.Document = printDocument1;
             daraGridViewPrintDialog.UseEXDialog = true;
             printDocument1.Print();
             this.Close();
 
-           // _btn.BackColor = ColorTranslator.FromHtml("#ee7621");
+            
+            foreach (var item in _siparisRepo.MasaSiparisleri(_oMasa))
+            {
+                _siparisRepo.Remove(item);
+
+            }
+
             this.Hide();
         }
-
-    }
+    } 
 }
