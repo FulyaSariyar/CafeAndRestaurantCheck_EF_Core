@@ -23,7 +23,8 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
         private void FrmKurulum_Load(object sender, EventArgs e)
         {
-            UrunListele();   
+            UrunListele();
+
         }
         public FrmKurulum()
         {
@@ -35,9 +36,11 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             lstUrunler.DataSource = null;
             lstUrunler.DataSource = _urunRepo.GetAll().Where(x => x.IsDeleted == false).ToList();
 
-            cmbKategori.DataSource = _kategoriRepo.GetAll().Where(x => x.IsDeleted == false).ToList();
-            cmbKategori.DisplayMember = "Ad";
-            cmbKategori.ValueMember = "Id";
+            //cmbKtgr.DataSource = _kategoriRepo.GetAll().Where(x => x.IsDeleted == false).ToList();
+            cmbKtgr.DataSource = _dbContext.Kategoriler.Where(x => x.IsDeleted == false).ToList();
+
+            cmbKtgr.DisplayMember = "Ad";
+            cmbKtgr.ValueMember = "Id";
 
             lstUrunler.DataSource = _dbContext.Urunler
                .Include(x => x.Kategori).Where(x => x.IsDeleted == false).ToList();
@@ -45,9 +48,9 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         private void btnKaydet_Click(object sender, EventArgs e)
         {
 
-            if (cmbKategori.SelectedItem != null)
+            if (cmbKtgr.SelectedItem != null)
             {
-                seciliKategori = (Kategori)cmbKategori.SelectedItem;
+                seciliKategori = (Kategori)cmbKtgr.SelectedItem;
             }
             else
             {
@@ -100,7 +103,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             seciliUrun = (Urun)lstUrunler.SelectedItem;
             txtUrunAd.Text = seciliUrun.Ad;
             txtFiyat.Text = seciliUrun.BirimFiyat.ToString();
-            cmbKategori.SelectedItem = seciliUrun.Kategori.Ad;
+            cmbKtgr.SelectedItem = seciliUrun.Kategori;
 
             if (seciliUrun.Fotograf != null)
             {
@@ -112,7 +115,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         private Kategori seciliKategori;
         private void btnGuncelle_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(cmbKategori.Text))
+            if (string.IsNullOrEmpty(cmbKtgr.Text))
             {
                 MessageBox.Show("Kategori alanı boş geçilemez.");
                 return;
@@ -122,9 +125,9 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
             if (seciliUrun == null) return;
 
-            if (cmbKategori.SelectedItem != null)
+            if (cmbKtgr.SelectedItem != null)
             {
-                seciliKategori = (Kategori)cmbKategori.SelectedItem;
+                seciliKategori = (Kategori)cmbKtgr.SelectedItem;
             }
             else
             {
