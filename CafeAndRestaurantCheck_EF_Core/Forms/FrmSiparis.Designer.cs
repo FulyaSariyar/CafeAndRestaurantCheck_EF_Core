@@ -42,6 +42,7 @@
             this.btn_SiparisAl = new System.Windows.Forms.Button();
             this.btnAdisyonKapat = new System.Windows.Forms.Button();
             this.btnGeri = new System.Windows.Forms.Button();
+            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.tableLayoutPanelMenuUrun.SuspendLayout();
             this.tableLayoutPanelMenuUrunler.SuspendLayout();
             this.tableLayoutPanelurunler.SuspendLayout();
@@ -236,6 +237,7 @@
             this.btnAdisyonKapat.TabIndex = 8;
             this.btnAdisyonKapat.Text = "HESAP";
             this.btnAdisyonKapat.UseVisualStyleBackColor = false;
+            this.btnAdisyonKapat.Click += new System.EventHandler(this.btnAdisyonKapat_Click);
             // 
             // btnGeri
             // 
@@ -255,6 +257,10 @@
             this.btnGeri.Text = "GERİ";
             this.btnGeri.UseVisualStyleBackColor = false;
             this.btnGeri.Click += new System.EventHandler(this.btnGeri_Click);
+            // 
+            // printDocument1
+            // 
+            this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument1_PrintPage);
             // 
             // FrmSiparis
             // 
@@ -295,5 +301,6 @@
         private ListView lstCart;
         private TableLayoutPanel tableLayoutPanel3;
         private Label lblToplam;
+        private System.Drawing.Printing.PrintDocument printDocument1;
     }
 }

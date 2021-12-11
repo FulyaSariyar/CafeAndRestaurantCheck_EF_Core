@@ -41,7 +41,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             cmbKategori.ValueMember = "Id";
 
             lstUrunler.DataSource = _dbContext.Urunler
-               .Include(x => x.Kategori).ToList();
+               .Include(x => x.Kategori).Where(x => x.IsDeleted == false).ToList();
         }
         private void btnKaydet_Click(object sender, EventArgs e)
         {
@@ -67,21 +67,12 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                     pbUrun.Image.Save(resimStream, ImageFormat.Jpeg);
                     urun.Fotograf = resimStream.ToArray();
                 }
-
-
             }
             catch (Exception ex)
             {
 
                 MessageBox.Show(ex.Message, "Bir hata oluştu", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            };
-            if (pbUrun.Image != null)
-            {
-                MemoryStream resimStream = new MemoryStream();
-                pbUrun.Image.Save(resimStream, ImageFormat.Jpeg);
-
-                urun.Fotograf = resimStream.ToArray();
-            }
+            };           
             _urunRepo.Add(urun);
             UrunListele();
         }
@@ -99,20 +90,18 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             {
                 pbUrun.ImageLocation = dialog.FileName;
             }
-
         }
         private Urun seciliUrun;
         private void lstUrunler_SelectedIndexChanged(object sender, EventArgs e)
         {
 
             if (lstUrunler.SelectedItem == null) return; //index çaıştığında null gelebilir. Hata verme.
-
           
             // seciliUrun = lstUrunler.SelectedItem as Urun;
             seciliUrun = (Urun)lstUrunler.SelectedItem;
             txtUrunAd.Text = seciliUrun.Ad;
             txtFiyat.Text = seciliUrun.BirimFiyat.ToString();
-            cmbKategori.SelectedItem = seciliUrun.Kategori;
+            cmbKategori.SelectedItem = seciliUrun.Kategori.Ad;
 
             if (seciliUrun.Fotograf != null)
             {
@@ -120,7 +109,6 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                 pbUrun.Image = Image.FromStream(stream);
             }
         }
-
         
         private Kategori seciliKategori;
         private void btnGuncelle_Click(object sender, EventArgs e)
@@ -205,9 +193,6 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             _dbContext = new CafeContext();
         }
 
-    
-    
-
         private void btnKategoriEkle_Click(object sender, EventArgs e)
         {
             var kategori = new Kategori();
@@ -227,8 +212,6 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
                 _kategoriRepo.Add(kategori);
                 ListeleKategori();
-
-
             }
             catch (Exception ex)
             {
@@ -242,10 +225,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
                 kategori.Fotograf = resimStream.ToArray();
             }
-
-
         }
-
         private void pbKategori_Click(object sender, EventArgs e)
         {
 
@@ -296,8 +276,6 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             frmBinaBilgileri.Show();
 
         }
-
-
         private void btnKategoriGuncelle_Click_1(object sender, EventArgs e)
         {
             var seciliKategori = new Kategori();
@@ -312,12 +290,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             _kategoriRepo.Update(kategori);
             ListeleKategori();
 
-
-
         }
-
-
-
         private void dgViewKategori_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             seciliKategori = (Kategori)this.dgViewKategori.CurrentRow.DataBoundItem;
@@ -334,14 +307,22 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         private void txtKategoriAd_KeyPress(object sender, KeyPressEventArgs e)
         {
 
+        }
 
-           //if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != ' '))
-           // {
-           //     e.Handled = true;
-           // }
+        private void txtUrunAd_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((char.IsLetter(e.KeyChar) == false) && (e.KeyChar != (char)08))
+            {
+                e.Handled = true;
+            }
+        }        
 
-
-
+        private void txtFiyat_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((char.IsDigit(e.KeyChar) == false) && (e.KeyChar != (char)08))
+            {
+                e.Handled = true;
+            }
         }
 
         private void btnRaporlar_Click(object sender, EventArgs e)

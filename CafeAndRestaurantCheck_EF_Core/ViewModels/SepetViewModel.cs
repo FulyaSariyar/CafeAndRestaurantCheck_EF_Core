@@ -11,7 +11,7 @@ namespace CafeAndRestaurantCheck_EF_Core.ViewModels
     public class SepetViewModel
     {
         public Urun Urun { get; set; }
-        public short Adet { get; set; } = 0;
+        public int Adet { get; set; } = 0;
         public int UrunId=>Urun.Id;
         public decimal BirimFiyat => Urun.BirimFiyat;
         public decimal AraToplam => Urun.BirimFiyat * Adet;

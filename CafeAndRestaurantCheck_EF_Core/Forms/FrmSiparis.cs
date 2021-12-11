@@ -27,12 +27,13 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             InitializeComponent();
             _oMasa = oMasa;
         }
-        
+
 
         // * Load kısmında sipariş form pictureboxlara çekme işlemi gerçekleştirildi.
 
         private void FrmSiparis_Load(object sender, EventArgs e)
         {
+
             var kategoriler = _kategoriRepo.GetAll().ToList();
 
             for (int i = 0; i < kategoriler.Count(); i++)
@@ -63,6 +64,18 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                 };
                 lblDetay.Parent = pbox;
             }
+
+            _sepet = _dbContext.Siparisler
+                .Include(s => s.Urun)
+                .Where(s => s.MasaAd == _oMasa.Name && s.MasaDurum == true)
+                .Select(s => new SepetViewModel
+                { 
+                    Urun = s.Urun,
+                    Adet = s.Adet,
+                })
+               .ToList();
+            SepetiDoldur();
+            Console.WriteLine();
         }
 
         //* Tıklanan menüye göre ürüler getirildi.
@@ -155,18 +168,18 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             lstCart.Columns.Add("Ürün");
             lstCart.Columns.Add("Ara Toplam");
 
-       
+
             foreach (var item in _sepet)
-            {         
+            {
                 ListViewItem viewItem = new ListViewItem(item.Adet.ToString());
                 viewItem.Tag = item;
                 viewItem.SubItems.Add(item.Urun.Ad);
-                viewItem.SubItems.Add($"{item.AraToplam:c2}");              
+                viewItem.SubItems.Add($"{item.AraToplam:c2}");
                 lstCart.Items.Add(viewItem);
             }
             lstCart.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
-        
+
         private void lstCart_Click(object sender, EventArgs e)
         {
             var secili = lstCart.SelectedItems[0].Tag as SepetViewModel;
@@ -205,7 +218,28 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                 _siparisRepo.Add(yeniSiparis);
 
             }
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            Bitmap Adisyon = new Bitmap(this.tableLayoutPanelsepet.Width, this.tableLayoutPanelsepet.Height);
+            lstCart.DrawToBitmap(Adisyon, new System.Drawing.Rectangle(0, 0, this.tableLayoutPanelsepet.Width, this.tableLayoutPanelsepet.Height));
 
+            Bitmap lbl = new Bitmap(this.lblToplam.Width, this.lblToplam.Height);
+            lblToplam.DrawToBitmap(lbl, new System.Drawing.Rectangle(0, 0, this.lblToplam.Width, this.lblToplam.Height));
+
+            e.Graphics.DrawImage(Adisyon, 135, 65);
+            e.Graphics.DrawImage(lbl, this.lstCart.Width, this.tableLayoutPanelsepet.Height - 300);
+        }
+
+        private void btnAdisyonKapat_Click(object sender, EventArgs e)
+        {
+            PrintDialog daraGridViewPrintDialog = new PrintDialog();
+            daraGridViewPrintDialog.Document = printDocument1;
+            daraGridViewPrintDialog.UseEXDialog = true;
+            printDocument1.Print();
+            this.Close();
+
+           // _btn.BackColor = ColorTranslator.FromHtml("#ee7621");
+            this.Hide();
         }
 
     }
