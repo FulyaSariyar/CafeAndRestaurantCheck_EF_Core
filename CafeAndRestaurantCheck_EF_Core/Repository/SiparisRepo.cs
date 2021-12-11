@@ -35,7 +35,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Repository
 
             var query2 = from siparis in _context.Siparisler
                          join urun in _context.Urunler on siparis.Id equals urun.Id
-                         where (siparis.CreatedDate.HasValue && siparis.CreatedDate.Value.Date >= DateTime.Now.AddDays(30)) && (siparis.CreatedDate.HasValue && siparis.CreatedDate.Value.Date <= DateTime.Now.Date)
+                         where (siparis.CreatedDate.HasValue && siparis.CreatedDate.Value.Date >= DateTime.Now.AddDays(30)) || (siparis.CreatedDate.HasValue && siparis.CreatedDate.Value.Date == DateTime.Now.Date)
                          select new  RaporViewModel
                          {
 
