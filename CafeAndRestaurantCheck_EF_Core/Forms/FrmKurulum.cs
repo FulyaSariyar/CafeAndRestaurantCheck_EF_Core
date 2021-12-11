@@ -23,7 +23,8 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
         private void FrmKurulum_Load(object sender, EventArgs e)
         {
-            UrunListele();   
+            UrunListele();
+            this.dgViewKategori.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
         public FrmKurulum()
         {
@@ -356,6 +357,8 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             frmPersonel.Show();
             this.Hide();
         }
+
+        
     }
 }
 

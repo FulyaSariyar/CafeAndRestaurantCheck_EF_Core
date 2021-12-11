@@ -30,7 +30,8 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
         private void FrmRapor_Load(object sender, EventArgs e)
         {
-          
+            this.dgViewGunluk.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgViewAylik.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
 
