@@ -33,7 +33,6 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                 {
 
                     Size = new Size(200, 90),
-                    //BackColor = ColorTranslator.FromHtml("#B0B0B0"),ffd2691e
                     BackColor = ColorTranslator.FromHtml("#ee7621"),
                     Text = binabilgileri[i].BinaBolumAdi,
                     ForeColor = Color.White
@@ -43,25 +42,14 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                 {
                     siparisler.Add(new Siparis()
                     {
-                        //Durum = SiparisDurum.Aktif,
-                        //KatIsim = BinaBilgileri[i].BinaBolumAdi,
                         MasaAd = $"MASA {j}",
-                        //MasaSiparisBilgisi = new List<SiparisDetay>()
                     });
                 }
 
                 btnKat.Name = $"{binabilgileri[i].BinaBolumAdi}";
                 btnKat.Click += new EventHandler(btnKat_Click);
-                //btnKat.Parent = groupBox;
-
-                //SiparisBilgileri1[BinaBilgileri[i]]
-                //Context.SiparisBilgileri1[BinaBilgileri[i].BinaBolumAdi] = siparisler;
                 flwpBinaBolumleri.Controls.Add(btnKat);
-
-
             }
-          
-
         }
         protected void btnKat_Click(object sender, EventArgs e)
         {
@@ -87,19 +75,11 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                             Text = $"MASA {i}",
                             ForeColor = Color.White
                         };
-
                         btnMasa.Name = $"{oButton.Text}MASA{i}";
-
-                        //masaAd = $"Masa{i}";
-                        //binaAd = item.BinaBolumAdi;
                         btnMasa.Click += new EventHandler(btnMasa_Click);
                         flwpMasa.Controls.Add(btnMasa);
-                        //Controls.Add(btnMasa); 
                     }
-
-                }
-                
-               
+                }  
             }
             foreach (Button button in flwpBinaBolumleri.Controls)
             {
@@ -111,7 +91,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         }
         private void MasaRenklendir()
         {
-            var mevcutSiparisler = _siparisRepo.GetAll(x => x.MasaDurum == true);
+            var mevcutSiparisler = _siparisRepo.GetAll(x => x.IsDeleted == false);
             foreach (Button button in flwpMasa.Controls)
             {
                 button.BackColor = defaultKatColor;
@@ -122,11 +102,11 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             }
         }
 
-
         protected void btnMasa_Click(object sender, EventArgs e)
         {
             Button oMasa = (Button)sender;
             FrmSiparis _frmSiparis = new FrmSiparis(oMasa);
+            _frmSiparis.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             _frmSiparis.Show();
             this.Hide();
 

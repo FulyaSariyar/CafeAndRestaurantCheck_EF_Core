@@ -100,7 +100,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             seciliUrun = (Urun)lstUrunler.SelectedItem;
             txtUrunAd.Text = seciliUrun.Ad;
             txtFiyat.Text = seciliUrun.BirimFiyat.ToString();
-            cmbKategori.SelectedItem = seciliUrun.Kategori.Ad;
+            cmbKategori.SelectedItem = seciliUrun.Kategori;
 
             if (seciliUrun.Fotograf != null)
             {
