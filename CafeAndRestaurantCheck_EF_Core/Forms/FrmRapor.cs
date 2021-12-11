@@ -1,5 +1,6 @@
 ﻿using CafeAndRestaurantCheck_EF_Core.Models;
 using CafeAndRestaurantCheck_EF_Core.Repository;
+using CafeAndRestaurantCheck_EF_Core.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,22 +30,25 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
         private void FrmRapor_Load(object sender, EventArgs e)
         {
-          
+            this.dgViewGunluk.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgViewAylik.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
 
         private void btnAylikRapor_Click(object sender, EventArgs e)
         {
             var siparis = new Siparis();
-            _siparisRepo.Aylik(siparis);
-            dgViewAylik.DataSource = _siparisRepo.GetAll().ToList();
+            dgViewAylik.DataSource = _siparisRepo.Aylik();
         }
 
         private void btnGünlükRapor_Click_1(object sender, EventArgs e)
         {
+
             var siparis = new Siparis();
-            _siparisRepo.Gunluk(siparis);
-            dgViewGunluk.DataSource = _siparisRepo.GetAll().ToList();
+            //_siparisRepo.Gunluk(siparis);
+            dgViewGunluk.DataSource = _siparisRepo.Gunluk();
+            
+
         }
     }
 }
