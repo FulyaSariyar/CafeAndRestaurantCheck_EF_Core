@@ -38,8 +38,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         private void btnAylikRapor_Click(object sender, EventArgs e)
         {
             var siparis = new Siparis();
-            _siparisRepo.Aylik(siparis);
-            dgViewAylik.DataSource = _siparisRepo.GetAll().ToList();
+            dgViewAylik.DataSource = _siparisRepo.Aylik();
         }
 
         private void btnGünlükRapor_Click_1(object sender, EventArgs e)
