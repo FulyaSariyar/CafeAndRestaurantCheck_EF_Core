@@ -34,7 +34,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         private void FrmSiparis_Load(object sender, EventArgs e)
         {
 
-            var kategoriler = _kategoriRepo.GetAll().Where(x=>x.IsDeleted==false).ToList();
+            var kategoriler = _kategoriRepo.GetAll().Where(x => x.IsDeleted == false).ToList();
 
             for (int i = 0; i < kategoriler.Count(); i++)
             {
@@ -83,7 +83,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                 {
                     foreach (var eleman in item.Urunler)
                     {
-                        if(eleman.IsDeleted==false)
+                        if (eleman.IsDeleted == false)
                         {
                             MemoryStream stream = new MemoryStream(eleman.Fotograf);
                             var groupBox = new GroupBox();
@@ -115,7 +115,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                             };
                             lblDetay.Parent = pbox;
                         }
-                        
+
                     }
                 }
             }
@@ -125,7 +125,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         {
             //if (lstProducts.SelectedItem == null) return;
             PictureBox oPictureBox = (PictureBox)sender;
-            var urunler = _urunRepo.GetAll().Where(x=>x.IsDeleted==false).ToList();
+            var urunler = _urunRepo.GetAll().Where(x => x.IsDeleted == false).ToList();
             foreach (var item in urunler)
             {
                 if (oPictureBox.Name == item.Ad)
@@ -198,23 +198,32 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
         private void btn_SiparisAl_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("button tık var");
-            foreach (var item in _sepet)
+            DialogResult result = MessageBox.Show("Sipariş almak istiyor musunuz?", "SiparişOnay", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
             {
-                Siparis yeniSiparis = new Siparis()
+                foreach (var item in _sepet)
                 {
-                    UrunId = item.UrunId,
-                    Adet = item.Adet,
-                    BirimFiyat = item.BirimFiyat,
-                    MasaAd = _oMasa.Name,
-                    AraToplam = item.AraToplam,
-                    MasaDurum = true
+                    Siparis yeniSiparis = new Siparis()
+                    {
+                        UrunId = item.UrunId,
+                        Adet = item.Adet,
+                        BirimFiyat = item.BirimFiyat,
+                        MasaAd = _oMasa.Name,
+                        AraToplam = item.AraToplam,
+                        MasaDurum = true
 
-                };
-                _siparisRepo.Add(yeniSiparis);
+                    };
+                    _siparisRepo.Add(yeniSiparis);
 
+                }
+                lstCart.Items.Clear();
+
+                MessageBox.Show("Sipariş Alındı");
             }
-
+            else
+            {
+                MessageBox.Show("Sipariş Alınmadı");
+            }
         }
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
@@ -230,22 +239,30 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
         private void btnAdisyonKapat_Click(object sender, EventArgs e)
         {
-            if (_sepet.Count == 0)
-                MessageBox.Show("Sipariş alınmadan işlem yapılamamaktadır.");
-            PrintDialog daraGridViewPrintDialog = new PrintDialog();
-            daraGridViewPrintDialog.Document = printDocument1;
-            daraGridViewPrintDialog.UseEXDialog = true;
-            printDocument1.Print();
-            this.Close();
-
-            
-            foreach (var item in _siparisRepo.MasaSiparisleri(_oMasa))
+            DialogResult result = MessageBox.Show("Hesabı kapatmak istiyor musunuz?", "HesapOnay", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
             {
-                _siparisRepo.Remove(item);
+                if (_sepet.Count == 0)
+                    MessageBox.Show("Sipariş alınmadan işlem yapılamamaktadır.");
+                PrintDialog daraGridViewPrintDialog = new PrintDialog();
+                daraGridViewPrintDialog.Document = printDocument1;
+                daraGridViewPrintDialog.UseEXDialog = true;
+                printDocument1.Print();
+               // this.Close();
 
+                foreach (var item in _siparisRepo.MasaSiparisleri(_oMasa))
+                {
+                    _siparisRepo.Remove(item);
+
+                }
+                MessageBox.Show("Hesap kapatma işlemi başarılı.");
+                
+                this.Hide();
             }
-
-            this.Hide();
+            else
+            {
+                MessageBox.Show("Hesap kapatma işlemi yapılmadı.");
+            }
         }
-    } 
+    }
 }

@@ -43,36 +43,45 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         }
         private void btnKaydet_Click(object sender, EventArgs e)
         {
-
-            if (cmbKategori.SelectedItem != null)
+            DialogResult result = MessageBox.Show("Ürün eklemek istiyor musunuz?", "Ürün Ekleme", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
             {
-                seciliKategori = (Kategori)cmbKategori.SelectedItem;
+                if (cmbKategori.SelectedItem != null)
+                {
+                    seciliKategori = (Kategori)cmbKategori.SelectedItem;
+                }
+                else
+                {
+                    seciliKategori = null;
+                }
+                var urun = new Urun();
+                try
+                {
+                    urun.Ad = txtUrunAd.Text;
+                    urun.BirimFiyat = Convert.ToDecimal(txtFiyat.Text);
+                    urun.KategoriId = seciliKategori.Id;
+
+                    if (pbUrun.Image != null)
+                    {
+                        MemoryStream resimStream = new MemoryStream();
+                        pbUrun.Image.Save(resimStream, ImageFormat.Jpeg);
+                        urun.Fotograf = resimStream.ToArray();
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    MessageBox.Show(ex.Message, "Bir hata oluştu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                };
+                _urunRepo.Add(urun);
+                UrunListele();
+                MessageBox.Show("Ürün Ekleme işlemi Tamamlandı");
             }
             else
             {
-                seciliKategori = null;
-            }
-            var urun = new Urun();
-            try
-            {
-                urun.Ad = txtUrunAd.Text;
-                urun.BirimFiyat = Convert.ToDecimal(txtFiyat.Text);
-                urun.KategoriId = seciliKategori.Id;
+                MessageBox.Show("Ürün Ekleme işlemi Yapılmadı");
 
-                if (pbUrun.Image != null)
-                {
-                    MemoryStream resimStream = new MemoryStream();
-                    pbUrun.Image.Save(resimStream, ImageFormat.Jpeg);
-                    urun.Fotograf = resimStream.ToArray();
-                }
             }
-            catch (Exception ex)
-            {
-
-                MessageBox.Show(ex.Message, "Bir hata oluştu", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            };           
-            _urunRepo.Add(urun);
-            UrunListele();
         }
 
         private void pbUrun_Click(object sender, EventArgs e)
@@ -132,22 +141,32 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             }
             try
             {
-                //var urun = _urunRepo.GetAll().First(x => x.Id == seciliUrun.Id);
-                var urun = _urunRepo.GetById(seciliUrun.Id);
-
-                urun.Ad = txtUrunAd.Text;
-                urun.BirimFiyat = Convert.ToDecimal(txtFiyat.Text);
-                urun.KategoriId = seciliKategori.Id;
-
-                if (pbUrun.Image != null)
+                DialogResult result = MessageBox.Show("Seçili ürününü güncellemek istiyor musunuz?", "Ürün Güncelleme", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
                 {
-                    MemoryStream resimStream = new MemoryStream();
-                    pbUrun.Image.Save(resimStream, ImageFormat.Jpeg);
+                    //var urun = _urunRepo.GetAll().First(x => x.Id == seciliUrun.Id);
+                    var urun = _urunRepo.GetById(seciliUrun.Id);
 
-                    urun.Fotograf = resimStream.ToArray();
+                    urun.Ad = txtUrunAd.Text;
+                    urun.BirimFiyat = Convert.ToDecimal(txtFiyat.Text);
+                    urun.KategoriId = seciliKategori.Id;
+
+                    if (pbUrun.Image != null)
+                    {
+                        MemoryStream resimStream = new MemoryStream();
+                        pbUrun.Image.Save(resimStream, ImageFormat.Jpeg);
+
+                        urun.Fotograf = resimStream.ToArray();
+                    }
+
+                    _urunRepo.Update(urun);
+                   
                 }
+                else
+                {
+                    MessageBox.Show("Ürün Güncelleme İşlemi Yapılmadı");
 
-                _urunRepo.Update(urun);
+                }
             }
             catch (Exception ex)
             {
@@ -157,7 +176,10 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             finally
             {
                 UrunListele();
+                MessageBox.Show("Ürün Güncelleme İşlemi Yapıldı");
             }
+
+            _dbContext = new CafeContext();
         }
 
         private void btnListele_Click(object sender, EventArgs e)
@@ -171,13 +193,14 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
             if (seciliUrun == null) return;
 
-            DialogResult cevap = MessageBox.Show($"{seciliUrun} yi silmek istiyor musunuz?", "Silme onayı", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult cevap = MessageBox.Show("Seçili ürünü silmek istiyor musunuz?", "Silme onayı", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (cevap == DialogResult.Yes)
             {
                 try
                 {
                     _urunRepo.Remove(seciliUrun);
+                    MessageBox.Show("Ürün silme işlemi tamamlandı");
                 }
                 catch (Exception ex)
                 {
@@ -189,40 +212,55 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                     UrunListele();
                 }
             }
+            else
+            {
+                MessageBox.Show("Ürün silme işlemi yapılmadı");
+
+            }
             _dbContext = new CafeContext();
         }
 
         private void btnKategoriEkle_Click(object sender, EventArgs e)
         {
-            var kategori = new Kategori();
-            try
+            DialogResult result = MessageBox.Show("Kategori eklemek istiyor musunuz?", "Kategori Ekleme", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
             {
+                var kategori = new Kategori();
+                try
+                {
 
-                kategori.Ad = txtKategoriAd.Text;
-                kategori.Aciklama = txtAciklama.Text;
+                    kategori.Ad = txtKategoriAd.Text;
+                    kategori.Aciklama = txtAciklama.Text;
 
 
+                    if (pbKategori.Image != null)
+                    {
+                        MemoryStream resimStream = new MemoryStream();
+                        pbKategori.Image.Save(resimStream, ImageFormat.Jpeg);
+                        kategori.Fotograf = resimStream.ToArray();
+                    }
+
+                    _kategoriRepo.Add(kategori);
+                    _kategoriRepo.KategoriListele();
+                }
+                catch (Exception ex)
+                {
+
+                    MessageBox.Show(ex.Message, "Bir hata oluştu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 if (pbKategori.Image != null)
                 {
                     MemoryStream resimStream = new MemoryStream();
                     pbKategori.Image.Save(resimStream, ImageFormat.Jpeg);
+
                     kategori.Fotograf = resimStream.ToArray();
                 }
 
-                _kategoriRepo.Add(kategori);
-                _kategoriRepo.KategoriListele();
+                MessageBox.Show("Kategori Ekleme İşlemi Tamamlandı");
             }
-            catch (Exception ex)
+            else
             {
-
-                MessageBox.Show(ex.Message, "Bir hata oluştu", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            if (pbKategori.Image != null)
-            {
-                MemoryStream resimStream = new MemoryStream();
-                pbKategori.Image.Save(resimStream, ImageFormat.Jpeg);
-
-                kategori.Fotograf = resimStream.ToArray();
+                MessageBox.Show("Kategori Ekleme İşlemi Yapılmadı");
             }
         }
         private void pbKategori_Click(object sender, EventArgs e)
@@ -242,19 +280,23 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         }
         private void btnKategoriSil_Click(object sender, EventArgs e)
         {
+           
+                if (_seciliKategoriViewModel == null) return;
+                _seciliKategoriViewModel = (KategoriViewModel)this.dgViewKategori.CurrentRow.DataBoundItem;
+                var kategori = _kategoriRepo.GetAll().FirstOrDefault(x => x.Id == _seciliKategoriViewModel.Id) as Kategori;
 
-            if (_seciliKategoriViewModel == null) return;
-            _seciliKategoriViewModel = (KategoriViewModel)this.dgViewKategori.CurrentRow.DataBoundItem;
-            var kategori = _kategoriRepo.GetAll().FirstOrDefault(x => x.Id == _seciliKategoriViewModel.Id) as Kategori;
             DialogResult cevap = MessageBox.Show($"{_seciliKategoriViewModel.Ad} yi silmek istiyor musunuz?", "Silme onayı", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
             if (cevap == DialogResult.Yes)
             {
                 _kategoriRepo.Remove(kategori);
-                _kategoriRepo.KategoriListele();
-
+                    _kategoriRepo.KategoriListele();
+                //var kategori = _kategoriRepo.GetById(seciliKategori.Id) as Kategori;
+                MessageBox.Show("Kategori Silme İşlemi Tamamlandı");
             }
-            //var kategori = _kategoriRepo.GetById(seciliKategori.Id) as Kategori;
+            else
+            {
+                MessageBox.Show("Kategori Silme İşlemi Yapılmadı");
+            }
 
         }
 
@@ -272,17 +314,27 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         }
         private void btnKategoriGuncelle_Click_1(object sender, EventArgs e)
         {
-            var seciliKategori = new Kategori();
-            if (_seciliKategoriViewModel == null) return;
-            _seciliKategoriViewModel = (KategoriViewModel)this.dgViewKategori.CurrentRow.DataBoundItem;
-            var kategori = _kategoriRepo.GetById(_seciliKategoriViewModel.Id) as Kategori;
-            _seciliKategoriViewModel.Ad = txtKategoriAd.Text;
-            _seciliKategoriViewModel.Aciklama = txtAciklama.Text;
-            _seciliKategoriViewModel.Fotograf = (byte[])new ImageConverter().ConvertTo(pbKategori.Image, typeof(byte[]));
+           
+                var seciliKategori = new Kategori();
+                if (_seciliKategoriViewModel == null) return;
+                _seciliKategoriViewModel = (KategoriViewModel)this.dgViewKategori.CurrentRow.DataBoundItem;
+                var kategori = _kategoriRepo.GetById(_seciliKategoriViewModel.Id) as Kategori;
+                _seciliKategoriViewModel.Ad = txtKategoriAd.Text;
+                _seciliKategoriViewModel.Aciklama = txtAciklama.Text;
+                _seciliKategoriViewModel.Fotograf = (byte[])new ImageConverter().ConvertTo(pbKategori.Image, typeof(byte[]));
 
+            DialogResult result = MessageBox.Show("Seçili kategoriyi güncellemek istiyor musunuz?", "Kategori Güncelleme", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                _kategoriRepo.Update(kategori);
+                _kategoriRepo.KategoriListele();
 
-            _kategoriRepo.Update(kategori);
-            _kategoriRepo.KategoriListele();
+                MessageBox.Show("Kategori Güncelleme İşlemi Tamamlandı");
+            }
+            else
+            {
+                MessageBox.Show("Kategori Güncelleme İşlemi Yapılmadı");
+            }
 
         }
         private void dgViewKategori_CellClick(object sender, DataGridViewCellEventArgs e)
