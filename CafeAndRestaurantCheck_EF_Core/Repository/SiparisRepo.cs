@@ -29,17 +29,20 @@ namespace CafeAndRestaurantCheck_EF_Core.Repository
                              Adet = siparis.Adet,
                              AraToplam = siparis.AraToplam
                          };
+            var query = _context.Siparisler.ToList();
             return query1.ToList();
+           
         }
+
         public virtual List<RaporViewModel> Aylik()
         {
 
             var query2 = from siparis in _context.Siparisler
                          join urun in _context.Urunler on siparis.Id equals urun.Id
-                         where (siparis.CreatedDate.HasValue && siparis.CreatedDate.Value.Date >= DateTime.Now.AddDays(30)) || (siparis.CreatedDate.HasValue && siparis.CreatedDate.Value.Date == DateTime.Now.Date)
+                         where (siparis.CreatedDate.HasValue && siparis.CreatedDate.Value.Date >= DateTime.Now.AddMonths(-1))
+                         && (siparis.CreatedDate.HasValue && siparis.CreatedDate.Value.Date <= DateTime.Now.Date)
                          select new  RaporViewModel
                          {
-
                              Ad = urun.Ad,
                              CreatedDate = siparis.CreatedDate,
                              BirimFiyat = siparis.BirimFiyat,
@@ -48,6 +51,8 @@ namespace CafeAndRestaurantCheck_EF_Core.Repository
 
                          };
             return query2.ToList();
+            var query = _context.Siparisler.ToList();
+            Console.WriteLine();
         }
 
         public virtual List<SepetViewModel> MasaSiparisleriSepet(Button masaAd)
@@ -65,20 +70,8 @@ namespace CafeAndRestaurantCheck_EF_Core.Repository
         }
         public virtual List<Siparis> MasaSiparisleri(Button masaAd)
         {
-            return _context.Siparisler
-               //.Include(s => s.Urun)
-               .Where(s => s.MasaAd == masaAd.Name && s.IsDeleted==false)
-               //.Select s 
-              .ToList();
+            return _context.Siparisler.Where(s => s.MasaAd == masaAd.Name && s.IsDeleted==false).ToList();
         }
-
-            //public override void Remove(Siparis entity, bool isSaveLater = false)
-            //{
-            //    var ıd = _context.Entry(entity);
-            //    var eskiFiyat = (decimal)entry.OriginalValues["Fiyat"];
-            //    //urun fiyat gecmisi tablosuna eklenir/loglanir
-            //    base.Update(entity, isSaveLater);
-            //}
-        }
+    }
 }
 

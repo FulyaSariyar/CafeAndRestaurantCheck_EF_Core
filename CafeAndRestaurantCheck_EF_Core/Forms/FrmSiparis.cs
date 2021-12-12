@@ -34,7 +34,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         private void FrmSiparis_Load(object sender, EventArgs e)
         {
 
-            var kategoriler = _kategoriRepo.GetAll().ToList();
+            var kategoriler = _kategoriRepo.GetAll().Where(x=>x.IsDeleted==false).ToList();
 
             for (int i = 0; i < kategoriler.Count(); i++)
             {
@@ -73,7 +73,8 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         private void pbox_Click(object sender, EventArgs e)
         {
             var query = _dbContext.Kategoriler
-                .Include(x => x.Urunler).ToList();
+                .Include(x => x.Urunler)
+                .ToList();
             flwpUrunller.Controls.Clear();
             PictureBox oPictureBox = (PictureBox)sender;
             foreach (var item in query)
@@ -82,35 +83,39 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                 {
                     foreach (var eleman in item.Urunler)
                     {
-                        MemoryStream stream = new MemoryStream(eleman.Fotograf);
-                        var groupBox = new GroupBox();
-                        groupBox.Name = $"grpBox{eleman.Ad}";
-
-                        //Sol taraf menü listesi click olaylaarı
-                        var pbox = new PictureBox
+                        if(eleman.IsDeleted==false)
                         {
-                            SizeMode = PictureBoxSizeMode.StretchImage,
-                            Size = new Size(210, 160),
-                            Image = Image.FromStream(stream)
-                        };
+                            MemoryStream stream = new MemoryStream(eleman.Fotograf);
+                            var groupBox = new GroupBox();
+                            groupBox.Name = $"grpBox{eleman.Ad}";
 
-                        pbox.Name = $"{eleman.Ad}";
-                        pbox.Click += new EventHandler(pboxUrunler_Click);
-                        pbox.Parent = groupBox;
-                        flwpUrunller.Controls.Add(pbox);
+                            //Sol taraf menü listesi click olaylaarı
+                            var pbox = new PictureBox
+                            {
+                                SizeMode = PictureBoxSizeMode.StretchImage,
+                                Size = new Size(210, 160),
+                                Image = Image.FromStream(stream)
+                            };
 
-                        // Label içerisinde ürün bilgileri yazdırıldı
-                        Label lblDetay = new Label
-                        {
-                            Text = $"{eleman.Ad} {eleman.BirimFiyat} TL",
-                            ForeColor = Color.White,
-                            Font = new Font("Arial", 10, FontStyle.Bold),
-                            BackColor = Color.Chocolate,
-                            TextAlign = ContentAlignment.MiddleCenter,
-                            Location = new Point(13, 110),
-                            AutoSize = true
-                        };
-                        lblDetay.Parent = pbox;
+                            pbox.Name = $"{eleman.Ad}";
+                            pbox.Click += new EventHandler(pboxUrunler_Click);
+                            pbox.Parent = groupBox;
+                            flwpUrunller.Controls.Add(pbox);
+
+                            // Label içerisinde ürün bilgileri yazdırıldı
+                            Label lblDetay = new Label
+                            {
+                                Text = $"{eleman.Ad} {eleman.BirimFiyat} TL",
+                                ForeColor = Color.White,
+                                Font = new Font("Arial", 10, FontStyle.Bold),
+                                BackColor = Color.Chocolate,
+                                TextAlign = ContentAlignment.MiddleCenter,
+                                Location = new Point(13, 110),
+                                AutoSize = true
+                            };
+                            lblDetay.Parent = pbox;
+                        }
+                        
                     }
                 }
             }
@@ -120,7 +125,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         {
             //if (lstProducts.SelectedItem == null) return;
             PictureBox oPictureBox = (PictureBox)sender;
-            var urunler = _urunRepo.GetAll().ToList();
+            var urunler = _urunRepo.GetAll().Where(x=>x.IsDeleted==false).ToList();
             foreach (var item in urunler)
             {
                 if (oPictureBox.Name == item.Ad)

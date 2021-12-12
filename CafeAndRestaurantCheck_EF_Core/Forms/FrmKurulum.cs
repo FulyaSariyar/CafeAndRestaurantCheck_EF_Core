@@ -1,17 +1,11 @@
 ﻿using CafeAndRestaurantCheck_EF_Core.Data;
 using CafeAndRestaurantCheck_EF_Core.Models;
 using CafeAndRestaurantCheck_EF_Core.Repository;
+using CafeAndRestaurantCheck_EF_Core.ViewModels;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
+
 using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace CafeAndRestaurantCheck_EF_Core.Forms
 {
@@ -23,12 +17,12 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
         private void FrmKurulum_Load(object sender, EventArgs e)
         {
-<<<<<<< HEAD
+
             UrunListele();
             this.dgViewKategori.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-=======
+
             UrunListele();   
->>>>>>> parent of dc46bc3 (Urun Listeleme güncelleme)
+
         }
         public FrmKurulum()
         {
@@ -40,7 +34,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             lstUrunler.DataSource = null;
             lstUrunler.DataSource = _urunRepo.GetAll().Where(x => x.IsDeleted == false).ToList();
 
-            cmbKategori.DataSource = _kategoriRepo.GetAll().Where(x => x.IsDeleted == false).ToList();
+            cmbKategori.DataSource = _dbContext.Kategoriler.Where(x => x.IsDeleted == false).ToList();
             cmbKategori.DisplayMember = "Ad";
             cmbKategori.ValueMember = "Id";
 
@@ -105,7 +99,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             seciliUrun = (Urun)lstUrunler.SelectedItem;
             txtUrunAd.Text = seciliUrun.Ad;
             txtFiyat.Text = seciliUrun.BirimFiyat.ToString();
-            cmbKategori.SelectedItem = seciliUrun.Kategori.Ad;
+            cmbKategori.SelectedItem = seciliUrun.Kategori;
 
             if (seciliUrun.Fotograf != null)
             {
@@ -115,6 +109,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         }
         
         private Kategori seciliKategori;
+        private KategoriViewModel _seciliKategoriViewModel;
         private void btnGuncelle_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(cmbKategori.Text))
@@ -215,7 +210,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                 }
 
                 _kategoriRepo.Add(kategori);
-                ListeleKategori();
+                _kategoriRepo.KategoriListele();
             }
             catch (Exception ex)
             {
@@ -245,24 +240,19 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                 pbKategori.ImageLocation = dialog.FileName;
             }
         }
-
-        private void ListeleKategori()
-        {
-            dgViewKategori.DataSource = null;
-            dgViewKategori.DataSource = _kategoriRepo.GetAll().Where(x => x.IsDeleted == false).ToList();
-        }
         private void btnKategoriSil_Click(object sender, EventArgs e)
         {
-            var seciliKategori = new Kategori();
-            if (seciliKategori == null) return;
-            seciliKategori = (Kategori)this.dgViewKategori.CurrentRow.DataBoundItem;
-            var kategori = _kategoriRepo.GetAll().FirstOrDefault(x => x.Id == seciliKategori.Id) as Kategori;
-            DialogResult cevap = MessageBox.Show($"{seciliKategori.Ad} yi silmek istiyor musunuz?", "Silme onayı", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (_seciliKategoriViewModel == null) return;
+            _seciliKategoriViewModel = (KategoriViewModel)this.dgViewKategori.CurrentRow.DataBoundItem;
+            var kategori = _kategoriRepo.GetAll().FirstOrDefault(x => x.Id == _seciliKategoriViewModel.Id) as Kategori;
+            DialogResult cevap = MessageBox.Show($"{_seciliKategoriViewModel.Ad} yi silmek istiyor musunuz?", "Silme onayı", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (cevap == DialogResult.Yes)
             {
                 _kategoriRepo.Remove(kategori);
-                ListeleKategori();
+                _kategoriRepo.KategoriListele();
+
             }
             //var kategori = _kategoriRepo.GetById(seciliKategori.Id) as Kategori;
 
@@ -270,7 +260,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
         private void btnKategoriListele_Click(object sender, EventArgs e)
         {
-            var siparis = new Siparis();
+            dgViewKategori.DataSource = null;
             dgViewKategori.DataSource = _kategoriRepo.KategoriListele();
         }
 
@@ -283,26 +273,26 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         private void btnKategoriGuncelle_Click_1(object sender, EventArgs e)
         {
             var seciliKategori = new Kategori();
-            if (seciliKategori == null) return;
-            seciliKategori = (Kategori)this.dgViewKategori.CurrentRow.DataBoundItem;
-            var kategori = _kategoriRepo.GetById(seciliKategori.Id) as Kategori;
-            seciliKategori.Ad = txtKategoriAd.Text;
-            seciliKategori.Aciklama = txtAciklama.Text;
-            seciliKategori.Fotograf = (byte[])new ImageConverter().ConvertTo(pbKategori.Image, typeof(byte[]));
+            if (_seciliKategoriViewModel == null) return;
+            _seciliKategoriViewModel = (KategoriViewModel)this.dgViewKategori.CurrentRow.DataBoundItem;
+            var kategori = _kategoriRepo.GetById(_seciliKategoriViewModel.Id) as Kategori;
+            _seciliKategoriViewModel.Ad = txtKategoriAd.Text;
+            _seciliKategoriViewModel.Aciklama = txtAciklama.Text;
+            _seciliKategoriViewModel.Fotograf = (byte[])new ImageConverter().ConvertTo(pbKategori.Image, typeof(byte[]));
 
 
             _kategoriRepo.Update(kategori);
-            ListeleKategori();
+            _kategoriRepo.KategoriListele();
 
         }
         private void dgViewKategori_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            seciliKategori = (Kategori)this.dgViewKategori.CurrentRow.DataBoundItem;
-            txtKategoriAd.Text = seciliKategori.Ad;
-            txtAciklama.Text = seciliKategori.Aciklama;
-            if (seciliKategori.Fotograf != null)
+            _seciliKategoriViewModel = (KategoriViewModel)dgViewKategori.CurrentRow.DataBoundItem;
+            txtKategoriAd.Text = _seciliKategoriViewModel.Ad;
+            txtAciklama.Text = _seciliKategoriViewModel.Aciklama;
+            if (_seciliKategoriViewModel.Fotograf != null)
             {
-                MemoryStream stream = new MemoryStream(seciliKategori.Fotograf);
+                MemoryStream stream = new MemoryStream(_seciliKategoriViewModel.Fotograf);
                 pbKategori.Image = Image.FromStream(stream);
 
             }
