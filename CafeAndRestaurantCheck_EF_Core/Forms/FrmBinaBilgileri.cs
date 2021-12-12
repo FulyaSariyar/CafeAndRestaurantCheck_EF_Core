@@ -49,31 +49,38 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
         private void btnEkle_Click(object sender, EventArgs e)
         {
-            for(int i = 0; i < checkedListBox1.CheckedItems.Count; i++)
+            DialogResult result = MessageBox.Show("Kat masa eklemek istiyor musunuz?", "KatMasa Onay", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
             {
-                string bilgi = checkedListBox1.CheckedItems[i].ToString();
-                katAd.Add(bilgi);
-            }
-
-            foreach (Control control in pnlCombolar.Controls)
-            {
-                if (control is ComboBox && control.Text != "")
-                    katMasa.Add(control.Text);
-            }
-            katMasa.Reverse();
-
-            for (int i = 0; i < katAd.Count; i++)
-            {
-                var bina = new BinaBilgi()
+                for (int i = 0; i < checkedListBox1.CheckedItems.Count; i++)
                 {
-                    BinaBolumAdi = katAd[i],
-                    MasaAdet = katMasa[i]
-                };
-               
-                _binaRepo.Add(bina);
-            };
-            MessageBox.Show("fdgdfg");
+                    string bilgi = checkedListBox1.CheckedItems[i].ToString();
+                    katAd.Add(bilgi);
+                }
 
+                foreach (Control control in pnlCombolar.Controls)
+                {
+                    if (control is ComboBox && control.Text != "")
+                        katMasa.Add(control.Text);
+                }
+                katMasa.Reverse();
+
+                for (int i = 0; i < katAd.Count; i++)
+                {
+                    var bina = new BinaBilgi()
+                    {
+                        BinaBolumAdi = katAd[i],
+                        MasaAdet = katMasa[i]
+                    };
+
+                    _binaRepo.Add(bina);
+                };
+                MessageBox.Show("KatMasa Ekleme İşlemi Tamamlandı");
+            }
+            else
+            {
+                MessageBox.Show("KatMasa Ekleme Başarısız");
+            }
 
         }
 
@@ -92,36 +99,54 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
         private void btnSil_Click(object sender, EventArgs e)
         {
-            var secilibina = (BinaBilgi)this.dtgrdBinaBilgileri.CurrentRow.DataBoundItem;
+            DialogResult result = MessageBox.Show("Kat masa silmek istiyor musunuz?", "KatMasa Silme", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                var secilibina = (BinaBilgi)this.dtgrdBinaBilgileri.CurrentRow.DataBoundItem;
 
-            //var secilibina = dtgrdBinaBilgileri.SelectedRows[0] as BinaBilgi;
-            //var bina = _cafeContext.B8inaBilgileri.Find0(secilibina.Id) 00 as BinaBilgi;
-            var bina = _binaRepo.GetAll().FirstOrDefault(x=>x.Id == secilibina.Id) as BinaBilgi;
-            //var bina = _cafeContext.BinaBilgileri.First(x => x.Id == secilibina.Id) as BinaBilgi;
-            _binaRepo.Remove(bina);
-            Listele();
+                //var secilibina = dtgrdBinaBilgileri.SelectedRows[0] as BinaBilgi;
+                //var bina = _cafeContext.B8inaBilgileri.Find0(secilibina.Id) 00 as BinaBilgi;
+                var bina = _binaRepo.GetAll().FirstOrDefault(x => x.Id == secilibina.Id) as BinaBilgi;
+                //var bina = _cafeContext.BinaBilgileri.First(x => x.Id == secilibina.Id) as BinaBilgi;
+                _binaRepo.Remove(bina);
+                Listele();
+                MessageBox.Show("KatMasa Silme İşlemi Tamamlandı");
+            }
+            else
+            {
+                MessageBox.Show("KatMasa Silme İşlemi Başarısız");
+            }
 
         }
         private void btnGuncelle_Click(object sender, EventArgs e)
         {
-            var secilibina = (BinaBilgi)this.dtgrdBinaBilgileri.CurrentRow.DataBoundItem;
-            var bina = _binaRepo.GetById(secilibina.Id) as BinaBilgi;
-            if (secilibina.BinaBolumAdi == "Bahçe"&& secilibina.BinaBolumAdi=="Bahçe")
-                bina.MasaAdet = cbBahçe.Text;
-            else if (secilibina.BinaBolumAdi == "Zemin Kat"&& secilibina.BinaBolumAdi == "Zemin Kat")
-                bina.MasaAdet = cbZemin.Text;
-            else if (secilibina.BinaBolumAdi == "Kat 1" && secilibina.BinaBolumAdi == "Kat 1")
-                bina.MasaAdet = cbKat1.Text;
-            else if (secilibina.BinaBolumAdi == "Kat 2" && secilibina.BinaBolumAdi == "Kat 2")
-                bina.MasaAdet = cbKat2.Text;
-            else if (secilibina.BinaBolumAdi == "Kat 3" && secilibina.BinaBolumAdi == "Kat 3")
-                bina.MasaAdet = cbKat3.Text;
-            else if (secilibina.BinaBolumAdi == "Kat 4" && secilibina.BinaBolumAdi == "Kat 4")
-                bina.MasaAdet =cbKat3.Text;
-            else if (secilibina.BinaBolumAdi == "Teras" && secilibina.BinaBolumAdi == "Teras")
-                bina.MasaAdet = cbTeras.Text;
-            _binaRepo.Update(bina);
-            Listele();
+            DialogResult result = MessageBox.Show("Kat masa bilgisi güncellemek istiyor musunuz?", "KatMasa Güncelleme", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                var secilibina = (BinaBilgi)this.dtgrdBinaBilgileri.CurrentRow.DataBoundItem;
+                var bina = _binaRepo.GetById(secilibina.Id) as BinaBilgi;
+                if (secilibina.BinaBolumAdi == "Bahçe" && secilibina.BinaBolumAdi == "Bahçe")
+                    bina.MasaAdet = cbBahçe.Text;
+                else if (secilibina.BinaBolumAdi == "Zemin Kat" && secilibina.BinaBolumAdi == "Zemin Kat")
+                    bina.MasaAdet = cbZemin.Text;
+                else if (secilibina.BinaBolumAdi == "Kat 1" && secilibina.BinaBolumAdi == "Kat 1")
+                    bina.MasaAdet = cbKat1.Text;
+                else if (secilibina.BinaBolumAdi == "Kat 2" && secilibina.BinaBolumAdi == "Kat 2")
+                    bina.MasaAdet = cbKat2.Text;
+                else if (secilibina.BinaBolumAdi == "Kat 3" && secilibina.BinaBolumAdi == "Kat 3")
+                    bina.MasaAdet = cbKat3.Text;
+                else if (secilibina.BinaBolumAdi == "Kat 4" && secilibina.BinaBolumAdi == "Kat 4")
+                    bina.MasaAdet = cbKat3.Text;
+                else if (secilibina.BinaBolumAdi == "Teras" && secilibina.BinaBolumAdi == "Teras")
+                    bina.MasaAdet = cbTeras.Text;
+                _binaRepo.Update(bina);
+                Listele();
+                MessageBox.Show("KatMasa Güncelleme İşlemi Tamamlandı");
+            }
+            else
+            {
+                MessageBox.Show("KatMasa Güncelleme İşlemi Başarısız");
+            }
         }
 
         private void button4_Click(object sender, EventArgs e)
