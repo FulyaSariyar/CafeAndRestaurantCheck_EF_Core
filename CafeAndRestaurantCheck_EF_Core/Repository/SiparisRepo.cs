@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CafeAndRestaurantCheck_EF_Core.Repository
 {
-   
+
     internal class SiparisRepo : RepositoryBase<Siparis, int>
     {
         // private  CafeContext _context = new CafeContext();
@@ -30,8 +30,19 @@ namespace CafeAndRestaurantCheck_EF_Core.Repository
                              AraToplam = siparis.AraToplam
                          };
             var query = _context.Siparisler.ToList();
-            return query1.ToList();
-           
+
+            var query5 = _context.Siparisler
+                .Include(s => s.Urun)
+                .Where(s => s.CreatedDate.HasValue && s.CreatedDate.Value.Date == DateTime.Now.Date)
+                .Select(s => new RaporViewModel
+                {
+                    Ad = s.Urun.Ad,
+                    CreatedDate = s.CreatedDate,
+                    BirimFiyat = s.BirimFiyat,
+                    Adet = s.Adet,
+                    AraToplam = s.AraToplam
+                }).ToList() ;
+            return query5.ToList();
         }
 
         public virtual List<RaporViewModel> Aylik()
@@ -41,7 +52,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Repository
                          join urun in _context.Urunler on siparis.Id equals urun.Id
                          where (siparis.CreatedDate.HasValue && siparis.CreatedDate.Value.Date >= DateTime.Now.AddMonths(-1))
                          && (siparis.CreatedDate.HasValue && siparis.CreatedDate.Value.Date <= DateTime.Now.Date)
-                         select new  RaporViewModel
+                         select new RaporViewModel
                          {
                              Ad = urun.Ad,
                              CreatedDate = siparis.CreatedDate,
@@ -51,8 +62,6 @@ namespace CafeAndRestaurantCheck_EF_Core.Repository
 
                          };
             return query2.ToList();
-            var query = _context.Siparisler.ToList();
-            Console.WriteLine();
         }
 
         public virtual List<SepetViewModel> MasaSiparisleriSepet(Button masaAd)
@@ -70,7 +79,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Repository
         }
         public virtual List<Siparis> MasaSiparisleri(Button masaAd)
         {
-            return _context.Siparisler.Where(s => s.MasaAd == masaAd.Name && s.IsDeleted==false).ToList();
+            return _context.Siparisler.Where(s => s.MasaAd == masaAd.Name && s.IsDeleted == false).ToList();
         }
     }
 }
