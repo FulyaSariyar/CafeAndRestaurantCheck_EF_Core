@@ -272,13 +272,13 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         }
         private void btnKategoriGuncelle_Click_1(object sender, EventArgs e)
         {
-            var seciliKategori = new Kategori();
+            var seciliKategori = new KategoriViewModel();
             if (_seciliKategoriViewModel == null) return;
             _seciliKategoriViewModel = (KategoriViewModel)this.dgViewKategori.CurrentRow.DataBoundItem;
             var kategori = _kategoriRepo.GetById(_seciliKategoriViewModel.Id) as Kategori;
-            _seciliKategoriViewModel.Ad = txtKategoriAd.Text;
-            _seciliKategoriViewModel.Aciklama = txtAciklama.Text;
-            _seciliKategoriViewModel.Fotograf = (byte[])new ImageConverter().ConvertTo(pbKategori.Image, typeof(byte[]));
+            seciliKategori.Ad = txtKategoriAd.Text;
+            seciliKategori.Aciklama = txtAciklama.Text;
+            seciliKategori.Fotograf = (byte[])new ImageConverter().ConvertTo(pbKategori.Image, typeof(byte[]));
 
 
             _kategoriRepo.Update(kategori);

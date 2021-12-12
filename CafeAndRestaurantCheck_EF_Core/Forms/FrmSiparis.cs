@@ -33,7 +33,14 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
         private void FrmSiparis_Load(object sender, EventArgs e)
         {
-
+            //Toplu güncelleme atıldı.
+            //var toplugüncelleme = _siparisRepo.GetAll().ToList();
+            //foreach (var item in toplugüncelleme)
+            //{
+            //    item.MasaDurum = false;
+            //    _siparisRepo.Update(item);
+            //}
+           
             var kategoriler = _kategoriRepo.GetAll().Where(x=>x.IsDeleted==false).ToList();
 
             for (int i = 0; i < kategoriler.Count(); i++)
@@ -212,7 +219,6 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
                 };
                 _siparisRepo.Add(yeniSiparis);
-
             }
 
         }
@@ -236,16 +242,12 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             daraGridViewPrintDialog.Document = printDocument1;
             daraGridViewPrintDialog.UseEXDialog = true;
             printDocument1.Print();
-            this.Close();
 
-            
             foreach (var item in _siparisRepo.MasaSiparisleri(_oMasa))
             {
                 _siparisRepo.Remove(item);
-
             }
 
-            this.Hide();
         }
     } 
 }
