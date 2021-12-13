@@ -23,8 +23,8 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
         private void btnRaporGeri_Click_1(object sender, EventArgs e)
         {
-            FrmGiris frmGiris = new FrmGiris();
-            frmGiris.Show();
+            FrmKurulum frmKurulum = new FrmKurulum();
+            frmKurulum.Show();
             this.Hide();
         }
 

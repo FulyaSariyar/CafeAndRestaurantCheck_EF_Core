@@ -161,7 +161,13 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
         }
 
-        
+        private void btnPersonelGeri_Click(object sender, EventArgs e)
+        {
+            FrmGiris frmGiris = new FrmGiris();
+            frmGiris.Show();
+            this.Close();
+        }
+
         protected void btnMasa_Click(object sender, EventArgs e)
         {
             Button oMasa = (Button)sender;

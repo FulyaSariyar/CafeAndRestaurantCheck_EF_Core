@@ -19,9 +19,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         {
 
             UrunListele();
-            this.dgViewKategori.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-
-            UrunListele();   
+            this.dgViewKategori.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; 
 
         }
         public FrmKurulum()
@@ -178,8 +176,8 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                 UrunListele();
                 MessageBox.Show("Ürün Güncelleme İşlemi Yapıldı");
             }
-
-            _dbContext = new CafeContext();
+           
+           
         }
 
         private void btnListele_Click(object sender, EventArgs e)
@@ -190,6 +188,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         private void btnSil_Click(object sender, EventArgs e)
         {
             Urun seciliUrun = (Urun)lstUrunler.SelectedItem;
+            var urun = _urunRepo.GetAll().FirstOrDefault(x => x.Id == seciliUrun.Id) as Urun;
 
             if (seciliUrun == null) return;
 
@@ -199,7 +198,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             {
                 try
                 {
-                    _urunRepo.Remove(seciliUrun);
+                    _urunRepo.Remove(urun);
                     MessageBox.Show("Ürün silme işlemi tamamlandı");
                 }
                 catch (Exception ex)
@@ -314,13 +313,13 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
         }
         private void btnKategoriGuncelle_Click_1(object sender, EventArgs e)
         {
-            var seciliKategori = new KategoriViewModel();
+            KategoriViewModel seciliKategori = new KategoriViewModel();
             if (_seciliKategoriViewModel == null) return;
             _seciliKategoriViewModel = (KategoriViewModel)this.dgViewKategori.CurrentRow.DataBoundItem;
-            var kategori = _kategoriRepo.GetById(_seciliKategoriViewModel.Id) as Kategori;
-            seciliKategori.Ad = txtKategoriAd.Text;
-            seciliKategori.Aciklama = txtAciklama.Text;
-            seciliKategori.Fotograf = (byte[])new ImageConverter().ConvertTo(pbKategori.Image, typeof(byte[]));
+            Kategori kategori = _kategoriRepo.GetById(_seciliKategoriViewModel.Id) as Kategori;
+            kategori.Ad = txtKategoriAd.Text;
+            kategori.Aciklama = txtAciklama.Text;
+            kategori.Fotograf = (byte[])new ImageConverter().ConvertTo(pbKategori.Image, typeof(byte[]));
 
             DialogResult result = MessageBox.Show("Seçili kategoriyi güncellemek istiyor musunuz?", "Kategori Güncelleme", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
@@ -379,8 +378,8 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
 
         private void btnKur_Click(object sender, EventArgs e)
         {
-           FrmPersonel frmPersonel = new FrmPersonel();
-            frmPersonel.Show();
+           FrmGiris frmGiris = new FrmGiris();
+            frmGiris.Show();
             this.Hide();
         }
 

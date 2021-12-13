@@ -73,7 +73,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             }
             _sepet = _siparisRepo.MasaSiparisleriSepet(_oMasa);
             SepetiDoldur();
-            Console.WriteLine();
+            
         }
 
         //* Tıklanan menüye göre ürüler getirildi.
@@ -208,6 +208,7 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             DialogResult result = MessageBox.Show("Sipariş almak istiyor musunuz?", "SiparişOnay", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
+
                 foreach (var item in _sepet)
                 {
                     Siparis yeniSiparis = new Siparis()
@@ -220,6 +221,8 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                         MasaDurum = true
 
                     };
+
+
                     _siparisRepo.Add(yeniSiparis);
 
                 }
@@ -265,6 +268,8 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
                 MessageBox.Show("Hesap kapatma işlemi başarılı.");
                 
                 this.Hide();
+                FrmPersonel frmPersonel = new FrmPersonel();
+                frmPersonel.Show();
             }
             else
             {
