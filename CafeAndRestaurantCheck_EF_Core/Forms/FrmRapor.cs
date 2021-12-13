@@ -34,21 +34,44 @@ namespace CafeAndRestaurantCheck_EF_Core.Forms
             this.dgViewAylik.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
-
+        int sumAylik = 0;
         private void btnAylikRapor_Click(object sender, EventArgs e)
         {
-            var siparis = new Siparis();
+          
             dgViewAylik.DataSource = _siparisRepo.Aylik();
-        }
 
+            foreach (RaporViewModel item in _siparisRepo.Aylik())
+            {
+                if (item.CreatedDate.HasValue && item.CreatedDate.Value.Date >= DateTime.Now.AddMonths(-1)
+                         && (item.CreatedDate.HasValue && item.CreatedDate.Value.Date <= DateTime.Now.Date))
+                {             
+                      sumAylik+= Convert.ToInt32(item.AraToplam);
+                }
+            }
+
+            lblAylikToplam.Text = $"AYLIK CİRO : {sumAylik} ₺";
+        }
+        int sumGunluk = 0;
         private void btnGünlükRapor_Click_1(object sender, EventArgs e)
         {
 
-            var siparis = new Siparis();
-            //_siparisRepo.Gunluk(siparis);
+           
+           
             dgViewGunluk.DataSource = _siparisRepo.Gunluk();
-            
+            foreach (RaporViewModel item in _siparisRepo.Gunluk())
+            {
+                if (item.CreatedDate.HasValue && item.CreatedDate.Value.Date == DateTime.Now.Date)
+                {
+                    sumGunluk += Convert.ToInt32(item.AraToplam);
+                }
+            }
+
+            lblGunlukToplam.Text = $"GÜNLÜK CİRO : {sumGunluk} ₺";
+
+
 
         }
+
+       
     }
 }
